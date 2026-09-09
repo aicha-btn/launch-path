@@ -2,13 +2,15 @@
 
 [![Verify](https://github.com/aicha-btn/launch-path/actions/workflows/verify.yml/badge.svg)](https://github.com/aicha-btn/launch-path/actions/workflows/verify.yml)
 
+[Démo en production](https://launch-path-bice.vercel.app)
+
 **Des parcours d'intégration qui se suivent tout seuls.**
 Créez un parcours type une fois, lancez-le pour une nouvelle recrue, et les
 échéances, les responsables et les retards se gèrent d'eux-mêmes.
 
-> Projet de portfolio. Application complète et fonctionnelle en local ;
-> aucun service commercial n'existe derrière, et les tarifs affichés sur la
-> page publique sont illustratifs.
+> Projet de portfolio. Application complète et fonctionnelle en local, avec un
+> déploiement de démonstration ; aucun service commercial n'existe derrière, et
+> les tarifs affichés sur la page publique sont illustratifs.
 
 ---
 
@@ -63,7 +65,7 @@ Calendar et Slack, pièces jointes, pagination, multi-organisation.
 | Base | PostgreSQL (Supabase), **Drizzle ORM** |
 | Auth | Supabase Auth — magic link, mot de passe pour les tests |
 | Style | Tailwind CSS 4, design system maison |
-| Emails | Mailpit en local ; Resend en production |
+| Emails | Mailpit en local ; Resend en production avec `RESEND_API_KEY` |
 | Tests | Vitest (unitaire et intégration), Playwright (4 parcours) |
 
 ---

@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * Un seul parcours end-to-end, sur le chemin critique du produit.
+ * Parcours end-to-end, sur le chemin critique du produit et le responsive.
  *
  * Il n'entre PAS dans `pnpm verify` : il exige un serveur lancé et une base
  * peuplée. Le mélanger aux tests unitaires rendrait la vérification lente et
