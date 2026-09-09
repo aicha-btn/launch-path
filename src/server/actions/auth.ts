@@ -44,7 +44,10 @@ export async function requestMagicLink(
 
   return {
     ok: true,
-    message: "Lien envoyé. En développement, il arrive dans Inbucket.",
+    message:
+      process.env.NODE_ENV === "development"
+        ? "Lien envoyé. En développement, il arrive dans Inbucket."
+        : "Lien envoyé. Vérifiez votre boîte mail.",
   };
 }
 
