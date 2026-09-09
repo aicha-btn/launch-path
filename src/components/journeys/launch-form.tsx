@@ -22,7 +22,7 @@ function Submit({ disabled }: { disabled: boolean }) {
     <button
       type="submit"
       disabled={pending || disabled}
-      className="inline-flex h-9 items-center bg-offset px-5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button inline-flex h-9 items-center bg-offset px-5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
     >
       {pending ? "Lancement…" : "Lancer l'onboarding"}
     </button>
@@ -64,7 +64,7 @@ export function LaunchForm({
 
   if (templates.length === 0) {
     return (
-      <div className="mt-10 max-w-[560px] border border-ink p-6">
+      <div className="motion-rise mt-10 max-w-[560px] border border-ink p-6">
         <p className="font-serif text-[26px] leading-tight tracking-[-0.01em] text-ink">
           Aucun parcours type disponible.
         </p>
@@ -74,7 +74,7 @@ export function LaunchForm({
         </p>
         <Link
           href="/templates/new"
-          className="mt-6 inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline hover:bg-ink"
+          className="motion-button mt-6 inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline hover:bg-ink"
         >
           Créer un parcours type
         </Link>
@@ -83,10 +83,10 @@ export function LaunchForm({
   }
 
   return (
-    <form action={action} className="mt-10">
+    <form action={action} className="motion-rise mt-10">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
         {/* Saisie */}
-        <div className="space-y-5">
+        <div className="motion-stagger space-y-5">
           <div>
             <label
               htmlFor="templateId"
@@ -99,7 +99,7 @@ export function LaunchForm({
               name="templateId"
               value={templateId}
               onChange={(e) => setTemplateId(e.target.value)}
-              className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
             >
               {templates.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -122,7 +122,7 @@ export function LaunchForm({
               required
               maxLength={120}
               placeholder="Sofia Marchetti"
-              className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
             />
           </div>
 
@@ -139,7 +139,7 @@ export function LaunchForm({
               type="email"
               maxLength={160}
               placeholder="sofia@exemple.fr"
-              className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
             />
           </div>
 
@@ -157,7 +157,7 @@ export function LaunchForm({
               required
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
+              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
             />
           </div>
 
@@ -172,7 +172,7 @@ export function LaunchForm({
               id="ownerId"
               name="ownerId"
               defaultValue={defaultOwnerId}
-              className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
             >
               {members.map((member) => (
                 <option key={member.id} value={member.id}>
@@ -196,7 +196,7 @@ export function LaunchForm({
         </div>
 
         {/* Aperçu */}
-        <div>
+        <div className="motion-rise-delay">
           <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
             <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
               Échéances calculées
@@ -215,7 +215,7 @@ export function LaunchForm({
               {preview.map((step) => (
                 <li
                   key={step.position}
-                  className="grid grid-cols-[24px_1fr_auto] items-center gap-3 border-b border-ink-15 py-2.5"
+                  className="motion-row grid grid-cols-[24px_1fr_auto] items-center gap-3 border-b border-ink-15 py-2.5"
                 >
                   <span className="grid h-6 w-6 place-items-center border border-ink-30 font-mono text-[10px] tabular-nums text-ink-45">
                     {String(step.position).padStart(2, "0")}

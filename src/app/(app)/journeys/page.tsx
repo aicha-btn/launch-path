@@ -75,7 +75,7 @@ export default async function JourneysPage({
         actions={<Button href="/journeys/new">Lancer un onboarding</Button>}
       />
 
-      <div className="px-6 py-10 sm:px-10">
+      <div className="motion-page px-6 py-10 sm:px-10">
         <JourneyFilters
           filters={{
             q: params.q ?? "",
@@ -117,7 +117,7 @@ export default async function JourneysPage({
         ) : (
           <>
             {/* En-tête de tableau : mono capitales sur filet lourd. */}
-            <div className="hidden grid-cols-[1fr_160px_150px_130px] gap-6 border-b-[3px] border-ink pb-2 lg:grid">
+            <div className="motion-rule hidden grid-cols-[1fr_160px_150px_130px] gap-6 border-b-[3px] border-ink pb-2 lg:grid">
               {["Personne", "Progression", "Pilote", "Prochaine échéance"].map(
                 (col) => (
                   <span
@@ -130,7 +130,7 @@ export default async function JourneysPage({
               )}
             </div>
 
-            <ul>
+            <ul className="motion-stagger">
               {journeys.map((journey) => {
                 const late = journey.tasks.filter(
                   (t) => t.status === "todo" && lateDays(t.dueDate) > 0,
@@ -140,7 +140,7 @@ export default async function JourneysPage({
                 return (
                   <li
                     key={journey.id}
-                    className="border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
+                    className="motion-row border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
                   >
                     <Link
                       href={`/journeys/${journey.id}`}

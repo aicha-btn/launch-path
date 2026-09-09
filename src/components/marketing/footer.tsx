@@ -3,9 +3,9 @@ import { Glyph } from "@/components/brand/glyph";
 
 export function MarketingFooter() {
   return (
-    <footer className="bg-ink text-paper">
+    <footer className="motion-rise bg-ink text-paper">
       <div className="mx-auto max-w-[1280px] px-6 py-14 sm:px-10">
-        <div className="grid gap-10 sm:grid-cols-[1fr_auto_auto]">
+        <div className="motion-stagger grid gap-10 sm:grid-cols-[1fr_auto_auto]">
           <div className="max-w-[320px]">
             <span className="flex items-center gap-2.5">
               <Glyph className="h-5 w-5" />
@@ -25,17 +25,17 @@ export function MarketingFooter() {
             </p>
             <ul className="mt-4 space-y-2.5 text-[13px]">
               <li>
-                <a href="#fonctionnement" className="text-paper/80 no-underline hover:text-paper hover:underline">
+                <a href="#fonctionnement" className="motion-link inline-block text-paper/80 no-underline hover:text-paper hover:underline">
                   Fonctionnement
                 </a>
               </li>
               <li>
-                <a href="#tarifs" className="text-paper/80 no-underline hover:text-paper hover:underline">
+                <a href="#tarifs" className="motion-link inline-block text-paper/80 no-underline hover:text-paper hover:underline">
                   Tarifs
                 </a>
               </li>
               <li>
-                <Link href="/dashboard" className="text-paper/80 no-underline hover:text-paper hover:underline">
+                <Link href="/dashboard" className="motion-link inline-block text-paper/80 no-underline hover:text-paper hover:underline">
                   Démonstration
                 </Link>
               </li>
@@ -48,12 +48,12 @@ export function MarketingFooter() {
             </p>
             <ul className="mt-4 space-y-2.5 text-[13px]">
               <li>
-                <Link href="/login" className="text-paper/80 no-underline hover:text-paper hover:underline">
+                <Link href="/login" className="motion-link inline-block text-paper/80 no-underline hover:text-paper hover:underline">
                   Se connecter
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="text-paper/80 no-underline hover:text-paper hover:underline">
+                <Link href="/dashboard" className="motion-link inline-block text-paper/80 no-underline hover:text-paper hover:underline">
                   Ouvrir l&apos;application
                 </Link>
               </li>

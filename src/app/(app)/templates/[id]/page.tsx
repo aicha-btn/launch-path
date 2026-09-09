@@ -59,7 +59,7 @@ export default async function TemplateDetailPage({
               />
               <button
                 type="submit"
-                className="inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08"
+                className="motion-button inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08"
               >
                 {template.isArchived ? "Réactiver" : "Archiver"}
               </button>
@@ -68,9 +68,9 @@ export default async function TemplateDetailPage({
         }
       />
 
-      <div className="px-6 pb-16 pt-10 sm:px-10">
+      <div className="motion-page px-6 pb-16 pt-10 sm:px-10">
         {template.isArchived && (
-          <div className="mb-10 max-w-[640px] border border-ink bg-signal p-4">
+          <div className="motion-rise mb-10 max-w-[640px] border border-ink bg-signal p-4">
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
               Parcours type archivé
             </p>
@@ -82,12 +82,12 @@ export default async function TemplateDetailPage({
           </div>
         )}
 
-        <section>
+        <section className="motion-rise">
           <SectionRule>Informations</SectionRule>
           <TemplateHeaderForm template={template} />
         </section>
 
-        <section className="mt-14">
+        <section className="motion-rise mt-14">
           <SectionRule count={template.steps.length}>Étapes</SectionRule>
           <div className="mt-2">
             <StepEditor

@@ -19,11 +19,11 @@ export default async function InvitationPage({
     body: React.ReactNode,
     action?: React.ReactNode,
   ) => (
-    <main className="min-h-dvh bg-paper px-6 py-16 sm:px-16 lg:px-24">
+    <main className="motion-page min-h-dvh bg-paper px-6 py-16 sm:px-16 lg:px-24">
       <div className="flex min-h-[calc(100dvh-8rem)] items-center">
-        <div className="w-full max-w-[460px]">
+        <div className="motion-stagger w-full max-w-[460px]">
           <div className="rule-double pt-6">
-            <Link href="/" className="no-underline">
+            <Link href="/" className="motion-link inline-block no-underline">
               <Logo />
             </Link>
           </div>
@@ -56,7 +56,7 @@ export default async function InvitationPage({
       </p>,
       <Link
         href="/"
-        className="inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink no-underline hover:bg-ink-08"
+        className="motion-button inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink no-underline hover:bg-ink-08"
       >
         Retour à l&apos;accueil
       </Link>,
@@ -84,7 +84,7 @@ export default async function InvitationPage({
       </p>,
       <Link
         href="/login"
-        className="inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline hover:bg-ink"
+        className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline hover:bg-ink"
       >
         Se connecter
       </Link>,
@@ -117,7 +117,7 @@ export default async function InvitationPage({
         <input type="hidden" name="token" value={token} />
         <button
           type="submit"
-          className="inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
+          className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
         >
           Accepter l&apos;invitation
         </button>
@@ -129,7 +129,7 @@ export default async function InvitationPage({
       <>
         <Link
           href={`/login?suivant=${encodeURIComponent(`/invitations/${token}`)}`}
-          className="inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline transition-colors duration-[120ms] hover:bg-ink"
+          className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline transition-colors duration-[120ms] hover:bg-ink"
         >
           Se connecter pour accepter
         </Link>

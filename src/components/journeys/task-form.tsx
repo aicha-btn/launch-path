@@ -13,7 +13,7 @@ function Submit({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
     >
       {pending ? "…" : label}
     </button>
@@ -37,7 +37,7 @@ export function TaskEditForm({
   }, [state]);
 
   return (
-    <form action={action} className="space-y-4">
+    <form action={action} className="motion-stagger space-y-4">
       <input type="hidden" name="taskId" value={task.id} />
 
       <div>
@@ -51,7 +51,7 @@ export function TaskEditForm({
           id="assigneeId"
           name="assigneeId"
           defaultValue={task.assignee?.id ?? ""}
-          className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+          className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
         >
           <option value="">Non assignée</option>
           {members.map((member) => (
@@ -75,7 +75,7 @@ export function TaskEditForm({
           type="date"
           required
           defaultValue={task.dueDate}
-          className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
+          className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
         />
       </div>
 
@@ -95,7 +95,7 @@ export function CommentForm({ taskId }: { taskId: string }) {
   }, [state]);
 
   return (
-    <form action={action} className="mt-5">
+    <form action={action} className="motion-rise mt-5">
       <input type="hidden" name="taskId" value={taskId} />
       <label htmlFor="body" className="sr-only">
         Commentaire
@@ -107,7 +107,7 @@ export function CommentForm({ taskId }: { taskId: string }) {
         rows={3}
         maxLength={2000}
         placeholder="Ce qui bloque, ce qui a été fait, une précision utile…"
-        className="w-full border border-ink-30 bg-paper px-3 py-2 text-[13px] leading-relaxed text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+        className="motion-input w-full border border-ink-30 bg-paper px-3 py-2 text-[13px] leading-relaxed text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
       />
       <div className="mt-3">
         <Submit label="Commenter" />

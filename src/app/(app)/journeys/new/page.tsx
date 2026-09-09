@@ -30,7 +30,7 @@ export default async function NewJourneyPage() {
         kicker="Onboardings · Nouveau lancement"
         title="Lancer un onboarding"
       />
-      <div className="px-6 pb-16 pt-10 sm:px-10">
+      <div className="motion-page px-6 pb-16 pt-10 sm:px-10">
         <LaunchForm
           templates={launchable}
           members={members}

@@ -19,9 +19,9 @@ export default async function WelcomePage() {
   if (membership) redirect("/dashboard");
 
   return (
-    <main className="min-h-dvh bg-paper px-6 py-16 sm:px-16 lg:px-24">
+    <main className="motion-page min-h-dvh bg-paper px-6 py-16 sm:px-16 lg:px-24">
       <div className="flex min-h-[calc(100dvh-8rem)] items-center">
-        <div className="w-full max-w-[460px]">
+        <div className="motion-stagger w-full max-w-[460px]">
           <div className="rule-double pt-6">
             <Logo />
           </div>

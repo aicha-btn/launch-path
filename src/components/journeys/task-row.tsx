@@ -70,7 +70,7 @@ export function TaskRow({
     });
   }
 
-  const boxClasses = `grid h-4 w-4 place-items-center border transition-colors duration-[120ms] ${
+  const boxClasses = `motion-avatar grid h-4 w-4 place-items-center border transition-colors duration-[120ms] ${
     done
       ? "border-offset bg-offset"
       : skipped
@@ -88,7 +88,7 @@ export function TaskRow({
 
   return (
     <div
-      className={`grid min-h-10 grid-cols-[16px_1fr_auto] items-center gap-3 border-b border-ink-15 px-2 py-2 transition-colors duration-[120ms] hover:bg-ink-08 sm:grid-cols-[16px_1fr_auto_auto_92px] sm:gap-4 sm:py-0 ${
+      className={`motion-row grid min-h-10 grid-cols-[16px_1fr_auto] items-center gap-3 border-b border-ink-15 px-2 py-2 transition-colors duration-[120ms] hover:bg-ink-08 sm:grid-cols-[16px_1fr_auto_auto_92px] sm:gap-4 sm:py-0 ${
         pending ? "opacity-60" : ""
       }`}
     >
@@ -113,7 +113,7 @@ export function TaskRow({
       <div className="min-w-0">
         <p className="min-w-0">
           {titleHref ? (
-            <Link href={titleHref} className="no-underline hover:underline">
+            <Link href={titleHref} className="motion-link inline-block max-w-full no-underline hover:underline">
               <span className={titleClasses}>{task.title}</span>
             </Link>
           ) : (
@@ -143,7 +143,7 @@ export function TaskRow({
           <button
             type="button"
             onClick={() => submit(skipped ? "todo" : "skipped")}
-            className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-ink"
+            className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-ink"
           >
             {skipped ? "Réactiver" : "Ignorer"}
           </button>

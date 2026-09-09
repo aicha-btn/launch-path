@@ -31,11 +31,11 @@ export default async function MembersPage() {
         title="Équipe"
       />
 
-      <div className="px-6 py-10 sm:px-10">
+      <div className="motion-page px-6 py-10 sm:px-10">
         {/* L'invitation est la fonctionnalité qui rend l'assignation possible :
             sans second membre, on ne peut assigner une étape qu'à soi-même. */}
         {isAdmin && (
-          <section className="max-w-[640px]">
+          <section className="motion-rise max-w-[640px]">
             <SectionRule>Inviter un collègue</SectionRule>
             <InviteForm />
             <p className="mt-4 text-[12px] leading-relaxed text-ink-70">
@@ -54,10 +54,10 @@ export default async function MembersPage() {
               return (
                 <li
                   key={member.userId}
-                  className="flex flex-wrap items-center justify-between gap-4 border-b border-ink-15 py-4"
+                  className="motion-row flex flex-wrap items-center justify-between gap-4 border-b border-ink-15 py-4"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid h-8 w-8 shrink-0 place-items-center bg-ink font-mono text-[11px] text-paper">
+                    <span className="motion-avatar grid h-8 w-8 shrink-0 place-items-center bg-ink font-mono text-[11px] text-paper">
                       {initialsFrom(member.email)}
                     </span>
                     <div className="min-w-0">
@@ -102,7 +102,7 @@ export default async function MembersPage() {
               {invitations.map((invitation) => (
                 <li
                   key={invitation.id}
-                  className="flex flex-wrap items-center justify-between gap-4 border-b border-ink-15 py-4"
+                  className="motion-row flex flex-wrap items-center justify-between gap-4 border-b border-ink-15 py-4"
                 >
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold text-ink-70">
@@ -127,7 +127,7 @@ export default async function MembersPage() {
                         <button
                           type="submit"
                           aria-label={`Annuler l'invitation de ${invitation.email}`}
-                          className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text"
+                          className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text"
                         >
                           Annuler
                         </button>
@@ -141,7 +141,7 @@ export default async function MembersPage() {
         )}
 
         {!isAdmin && (
-          <p className="mt-10 max-w-[60ch] text-[13px] leading-relaxed text-ink-70">
+          <p className="motion-rise mt-10 max-w-[60ch] text-[13px] leading-relaxed text-ink-70">
             Seuls les administrateurs peuvent inviter ou retirer des membres.
           </p>
         )}

@@ -151,13 +151,273 @@
   border-top: 1px solid var(--ink);
 }
 
+/* Motion system : reveal editorial, micro-interactions nettes, zéro flou. */
+@keyframes lp-rise-in {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes lp-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lp-scale-in {
+  0% {
+    opacity: 0;
+    scale: 0.94;
+  }
+  70% {
+    scale: 1.04;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes lp-rule-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes lp-sheet-in {
+  from {
+    opacity: 0;
+    translate: 20px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes lp-stamp-in {
+  0% {
+    opacity: 0;
+    scale: 0.86;
+  }
+  58% {
+    scale: 1.08;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@layer utilities {
+  .motion-page,
+  .motion-rise {
+    animation: lp-rise-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .motion-fade {
+    animation: lp-fade-in 220ms ease-out both;
+  }
+
+  .motion-rise-delay {
+    animation: lp-rise-in 520ms cubic-bezier(0.16, 1, 0.3, 1) 90ms both;
+  }
+
+  .motion-rule {
+    animation: lp-rule-in 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .motion-sheet {
+    animation: lp-sheet-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .motion-stamp {
+    animation: lp-stamp-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: scale 160ms ease-out;
+  }
+
+  .motion-button {
+    overflow: hidden;
+    position: relative;
+    transition-duration: 160ms;
+    transition-property: background-color, border-color, color, opacity, translate;
+    transition-timing-function: ease-out;
+  }
+
+  .motion-button::after {
+    background: currentColor;
+    content: "";
+    inset-block: 0;
+    left: -24%;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: skewX(-14deg);
+    transition:
+      opacity 180ms ease-out,
+      transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    width: 14%;
+  }
+
+  .motion-row,
+  .motion-card,
+  .motion-avatar,
+  .motion-folio > *,
+  .motion-input,
+  .motion-link,
+  .motion-status [aria-hidden] {
+    transition-duration: 160ms;
+    transition-property: background-color, border-color, color, opacity, scale, translate;
+    transition-timing-function: ease-out;
+  }
+
+  .motion-folio > * {
+    animation: lp-scale-in 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .motion-stagger > * {
+    animation: lp-rise-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .motion-stagger > :nth-child(1),
+  .motion-folio > :nth-child(1) {
+    animation-delay: 40ms;
+  }
+  .motion-stagger > :nth-child(2),
+  .motion-folio > :nth-child(2) {
+    animation-delay: 80ms;
+  }
+  .motion-stagger > :nth-child(3),
+  .motion-folio > :nth-child(3) {
+    animation-delay: 120ms;
+  }
+  .motion-stagger > :nth-child(4),
+  .motion-folio > :nth-child(4) {
+    animation-delay: 160ms;
+  }
+  .motion-stagger > :nth-child(5),
+  .motion-folio > :nth-child(5) {
+    animation-delay: 200ms;
+  }
+  .motion-stagger > :nth-child(6),
+  .motion-folio > :nth-child(6) {
+    animation-delay: 240ms;
+  }
+  .motion-stagger > :nth-child(7),
+  .motion-folio > :nth-child(7) {
+    animation-delay: 280ms;
+  }
+  .motion-stagger > :nth-child(8),
+  .motion-folio > :nth-child(8) {
+    animation-delay: 320ms;
+  }
+  .motion-stagger > :nth-child(9),
+  .motion-folio > :nth-child(9) {
+    animation-delay: 360ms;
+  }
+  .motion-stagger > :nth-child(10),
+  .motion-folio > :nth-child(10) {
+    animation-delay: 400ms;
+  }
+  .motion-stagger > :nth-child(11),
+  .motion-folio > :nth-child(11) {
+    animation-delay: 440ms;
+  }
+  .motion-stagger > :nth-child(12),
+  .motion-folio > :nth-child(12) {
+    animation-delay: 480ms;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .motion-button:hover:not(:disabled) {
+    translate: 0 -1px;
+  }
+
+  .motion-button:hover::after {
+    opacity: 0.12;
+    transform: translateX(860%) skewX(-14deg);
+  }
+
+  .motion-button:active:not(:disabled) {
+    translate: 0 1px;
+  }
+
+  .motion-row:hover {
+    translate: 3px 0;
+  }
+
+  .motion-card:hover {
+    translate: -2px -2px;
+  }
+
+  .motion-avatar:hover,
+  .motion-folio > *:hover,
+  .motion-status:hover [aria-hidden] {
+    scale: 1.12;
+  }
+
+  .motion-stamp:hover {
+    scale: 1.04;
+  }
+
+  .motion-input:focus,
+  .motion-input:focus-visible,
+  .motion-input:focus-within {
+    background-color: color-mix(in srgb, var(--paper) 88%, var(--signal) 12%);
+    translate: 0 -1px;
+  }
+
+  .motion-link:hover {
+    translate: 2px 0;
+  }
+}
+
 /* Le papier ne bouge pas beaucoup. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .motion-button:hover,
+  .motion-row:hover,
+  .motion-card:hover,
+  .motion-stamp:hover,
+  .motion-avatar:hover,
+  .motion-folio > *:hover,
+  .motion-status:hover [aria-hidden],
+  .motion-link:hover,
+  .motion-input:focus,
+  .motion-input:focus-visible,
+  .motion-input:focus-within {
+    translate: 0 0 !important;
+  }
+
+  .motion-stamp:hover,
+  .motion-avatar:hover,
+  .motion-folio > *:hover,
+  .motion-status:hover [aria-hidden] {
+    scale: 1 !important;
+  }
+
+  .motion-button:hover::after {
+    opacity: 0 !important;
+    transform: skewX(-14deg) !important;
   }
 }

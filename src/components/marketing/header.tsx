@@ -10,9 +10,9 @@ const LINKS = [
 
 export function MarketingHeader() {
   return (
-    <header className="border-b border-ink bg-paper">
+    <header className="motion-fade border-b border-ink bg-paper">
       <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-6 px-6 py-4 sm:px-10">
-        <Link href="/" className="no-underline">
+        <Link href="/" className="motion-link no-underline">
           <Logo />
         </Link>
 
@@ -22,7 +22,7 @@ export function MarketingHeader() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink-70 no-underline transition-colors duration-[120ms] hover:text-ink"
+                  className="motion-link inline-block font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink-70 no-underline transition-colors duration-[120ms] hover:text-ink"
                 >
                   {link.label}
                 </a>
@@ -34,13 +34,13 @@ export function MarketingHeader() {
         <div className="flex items-center gap-3">
           <Link
             href="/login"
-            className="hidden font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink no-underline hover:underline sm:block"
+            className="motion-link hidden font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink no-underline hover:underline sm:block"
           >
             Se connecter
           </Link>
           <Link
             href="/dashboard"
-            className="inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline transition-colors duration-[120ms] hover:bg-ink"
+            className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline transition-colors duration-[120ms] hover:bg-ink"
           >
             Voir la démo
           </Link>

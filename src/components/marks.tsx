@@ -15,7 +15,7 @@ export function Stamp({
 }) {
   return (
     <span
-      className={`inline-block bg-correction px-2 py-[3px] font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper ${
+      className={`motion-stamp inline-block bg-correction px-2 py-[3px] font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper ${
         tilted ? "-rotate-2" : ""
       }`}
     >
@@ -47,7 +47,7 @@ export function StatusLabel({
 
   return (
     <span
-      className={`inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] ${text}`}
+      className={`motion-status inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] ${text}`}
     >
       <span aria-hidden className={`h-1.5 w-1.5 ${node}`} />
       {children}
@@ -78,7 +78,7 @@ export function SectionRule({
   count?: number;
 }) {
   return (
-    <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
+    <div className="motion-rule flex items-baseline justify-between border-b-[3px] border-ink pb-2">
       <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
         {children}
       </h2>

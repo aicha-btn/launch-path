@@ -12,7 +12,7 @@ function Submit() {
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
     >
       {pending ? "Enregistrement…" : "Enregistrer"}
     </button>
@@ -29,7 +29,7 @@ export function TemplateHeaderForm({ template }: { template: Template }) {
   }, [state]);
 
   return (
-    <form action={action} className="mt-6 max-w-[640px] space-y-5">
+    <form action={action} className="motion-stagger mt-6 max-w-[640px] space-y-5">
       <input type="hidden" name="templateId" value={template.id} />
 
       <div>
@@ -45,7 +45,7 @@ export function TemplateHeaderForm({ template }: { template: Template }) {
           required
           maxLength={80}
           defaultValue={template.name}
-          className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+          className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
         />
       </div>
 
@@ -62,7 +62,7 @@ export function TemplateHeaderForm({ template }: { template: Template }) {
           rows={2}
           maxLength={400}
           defaultValue={template.description}
-          className="mt-2 w-full border border-ink-30 bg-paper px-3 py-2 text-sm text-ink focus:border-ink focus:outline-none"
+          className="motion-input mt-2 w-full border border-ink-30 bg-paper px-3 py-2 text-sm text-ink focus:border-ink focus:outline-none"
         />
       </div>
 
@@ -77,7 +77,7 @@ export function TemplateHeaderForm({ template }: { template: Template }) {
           id="targetType"
           name="targetType"
           defaultValue={template.targetType}
-          className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none sm:w-[240px]"
+          className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none sm:w-[240px]"
         >
           <option value="employee">Collaborateur</option>
           <option value="customer">Client</option>

@@ -25,7 +25,7 @@ export default async function TemplatesPage() {
         actions={<Button href="/templates/new">Créer un template</Button>}
       />
 
-      <div className="px-6 py-10 sm:px-10">
+      <div className="motion-page px-6 py-10 sm:px-10">
         {templates.length === 0 ? (
           <EmptyState
             title="Aucun parcours type."
@@ -35,7 +35,7 @@ export default async function TemplatesPage() {
             responsable et leur délai. Vous ne l&apos;écrivez qu&apos;une fois.
           </EmptyState>
         ) : (
-          <div className="space-y-12">
+          <div className="motion-stagger space-y-12">
             <section>
               <SectionRule count={live.length}>Actifs</SectionRule>
               <ul>
@@ -51,7 +51,7 @@ export default async function TemplatesPage() {
                   return (
                     <li
                       key={template.id}
-                      className="border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
+                      className="motion-row border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
                     >
                       <Link
                         href={`/templates/${template.id}`}
@@ -95,11 +95,11 @@ export default async function TemplatesPage() {
                   {archived.map((template) => (
                     <li
                       key={template.id}
-                      className="flex flex-wrap items-baseline justify-between gap-3 border-b border-ink-15 py-4"
+                      className="motion-row flex flex-wrap items-baseline justify-between gap-3 border-b border-ink-15 py-4"
                     >
                       <Link
                         href={`/templates/${template.id}`}
-                        className="text-[15px] font-semibold text-ink-45 line-through no-underline hover:text-ink-70"
+                        className="motion-link text-[15px] font-semibold text-ink-45 line-through no-underline hover:text-ink-70"
                       >
                         {template.name}
                       </Link>

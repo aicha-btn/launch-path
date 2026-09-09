@@ -39,12 +39,12 @@ export function TaskSheet({
       <Link
         href={closeHref}
         aria-label="Fermer le panneau"
-        className="fixed inset-0 z-40 bg-ink/[0.88] no-underline"
+        className="motion-fade fixed inset-0 z-40 bg-ink/[0.88] no-underline"
       />
 
       <aside
         aria-label={`Détail de l'étape ${task.position}`}
-        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[480px] flex-col border-l-[3px] border-ink bg-paper"
+        className="motion-sheet fixed inset-y-0 right-0 z-50 flex w-full max-w-[480px] flex-col border-l-[3px] border-ink bg-paper"
       >
         {/* En-tête */}
         <div className="border-b-[3px] border-ink px-6 py-5">
@@ -57,7 +57,7 @@ export function TaskSheet({
             <Link
               href={closeHref}
               aria-label="Fermer"
-              className="font-mono text-[13px] leading-none text-ink no-underline hover:text-correction-text"
+              className="motion-button inline-flex h-7 w-7 items-center justify-center font-mono text-[13px] leading-none text-ink no-underline hover:text-correction-text"
             >
               ✕
             </Link>
@@ -93,7 +93,7 @@ export function TaskSheet({
         </div>
 
         {/* Corps défilant */}
-        <div className="flex-1 overflow-y-auto px-6 py-6">
+        <div className="motion-stagger flex-1 overflow-y-auto px-6 py-6">
           {task.description && (
             <p className="mb-8 text-[13px] leading-relaxed text-ink-70">
               {task.description}
@@ -127,7 +127,7 @@ export function TaskSheet({
             ) : (
               <ul className="mt-2">
                 {comments.map((comment) => (
-                  <li key={comment.id} className="border-b border-ink-15 py-4">
+                  <li key={comment.id} className="motion-row border-b border-ink-15 py-4">
                     <div className="flex items-center justify-between gap-3">
                       <span className="flex min-w-0 items-center gap-2">
                         {comment.author && <Avatar member={comment.author} />}
@@ -154,7 +154,7 @@ export function TaskSheet({
                         />
                         <button
                           type="submit"
-                          className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text"
+                          className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text"
                         >
                           Supprimer
                         </button>

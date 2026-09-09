@@ -89,7 +89,7 @@ export default async function JourneyDetailPage({
               <input type="hidden" name="journeyId" value={journey.id} />
               <button
                 type="submit"
-                className="inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
+                className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
               >
                 Réactiver
               </button>
@@ -103,7 +103,7 @@ export default async function JourneyDetailPage({
                 <input type="hidden" name="journeyId" value={journey.id} />
                 <button
                   type="submit"
-                  className="inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08"
+                  className="motion-button inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08"
                 >
                   Annuler
                 </button>
@@ -113,9 +113,9 @@ export default async function JourneyDetailPage({
         }
       />
 
-      <div className="px-6 py-10 sm:px-10">
+      <div className="motion-page px-6 py-10 sm:px-10">
         {/* Le tampon incliné : une seule fois par page, ici. */}
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="motion-stagger flex flex-wrap items-center gap-4">
           <JourneyStatusLabel status={journey.status} />
           {late > 0 && (
             <Stamp tilted>{`Retard ${late} tâche${late > 1 ? "s" : ""}`}</Stamp>
@@ -130,7 +130,7 @@ export default async function JourneyDetailPage({
           <Folio tasks={journey.tasks} />
         </div>
 
-        <div className="mt-14 space-y-12">
+        <div className="motion-stagger mt-14 space-y-12">
           {groupByWeek(journey.tasks, journey.startDate).map(([week, tasks]) => (
             <section key={week}>
               <SectionRule count={tasks.length}>{weekLabel(week)}</SectionRule>

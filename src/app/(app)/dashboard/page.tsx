@@ -31,11 +31,11 @@ export default async function DashboardPage() {
         actions={<Button href="/journeys/new">Lancer un onboarding</Button>}
       />
 
-      <div className="px-6 py-10 sm:px-10">
+      <div className="motion-page px-6 py-10 sm:px-10">
         {/* Chaque encre garde son sens : bleu pour la structure, jaune pour
             l'emphase, rouge pour le seul retard. Les compteurs viennent de
             requêtes SQL, pas d'un filtre en mémoire. */}
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="motion-stagger grid grid-cols-2 gap-3 lg:grid-cols-4">
           <Figure tone="offset" value={counts.activeJourneys} label="Onboardings actifs" />
           <Figure tone="correction" value={counts.lateTasks} label="Tâches en retard" />
           <Figure tone="signal" value={counts.dueSoon} label="Dues sous 7 jours" />
@@ -53,7 +53,7 @@ export default async function DashboardPage() {
             </EmptyState>
           </div>
         ) : (
-          <section className="mt-14">
+          <section className="motion-rise mt-14">
             <SectionRule count={active.length}>Parcours actifs</SectionRule>
 
             <ul>
@@ -66,7 +66,7 @@ export default async function DashboardPage() {
                 return (
                   <li
                     key={journey.id}
-                    className="border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
+                    className="motion-row border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
                   >
                     <Link
                       href={`/journeys/${journey.id}`}
@@ -104,7 +104,7 @@ export default async function DashboardPage() {
 
         {/* Le seul bloc rouge de la page. */}
         {lateTasks.length > 0 && (
-          <section className="mt-14">
+          <section className="motion-rise mt-14">
             <SectionRule count={lateTasks.length}>Tâches en retard</SectionRule>
             <ul>
               {lateTasks.map(({ task, journeyId }) => (

@@ -69,7 +69,7 @@ function Cta({
   return (
     <Link
       href={href}
-      className={`inline-flex h-11 items-center justify-center px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${styles}`}
+      className={`motion-button inline-flex h-11 items-center justify-center px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${styles}`}
     >
       {children}
     </Link>
@@ -94,12 +94,12 @@ export default function LandingPage() {
   const heroTasks = late.slice(0, 3);
 
   return (
-    <main>
+    <main className="motion-page">
       {/* ============================ HERO ============================ */}
       <section className="border-b-[3px] border-ink">
         <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-24">
           <div className="grid gap-14 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-20">
-            <div>
+            <div className="motion-stagger">
               <Kicker>Onboarding · RH &amp; Customer Success</Kicker>
 
               <h1 className="mt-6 font-serif text-[46px] leading-[0.98] tracking-[-0.025em] text-ink sm:text-[68px]">
@@ -131,7 +131,7 @@ export default function LandingPage() {
             </div>
 
             {/* Le produit se montre lui-même. */}
-            <div className="border border-ink bg-paper">
+            <div className="motion-card motion-rise-delay border border-ink bg-paper">
               <div className="border-b-[3px] border-ink px-5 py-4">
                 <div className="flex items-baseline justify-between gap-4">
                   <div className="min-w-0">
@@ -171,14 +171,14 @@ export default function LandingPage() {
 
       {/* ========================== PROBLÈME ========================== */}
       <section className="border-b-[3px] border-ink">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
+        <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Le problème</Kicker>
           <SectionTitle>
             Un onboarding raté ne se voit qu&apos;une fois qu&apos;il est trop
             tard.
           </SectionTitle>
 
-          <div className="mt-12 grid gap-px border border-ink bg-ink sm:grid-cols-3">
+          <div className="motion-stagger mt-12 grid gap-px border border-ink bg-ink sm:grid-cols-3">
             {[
               {
                 figure: "01",
@@ -201,7 +201,7 @@ export default function LandingPage() {
             ].map((item) => (
               <div
                 key={item.figure}
-                className={`p-6 sm:p-7 ${
+                className={`motion-card p-6 sm:p-7 ${
                   item.tone === "signal" ? "bg-signal" : "bg-paper"
                 }`}
               >
@@ -222,11 +222,11 @@ export default function LandingPage() {
 
       {/* ======================== FONCTIONNEMENT ======================= */}
       <section id="fonctionnement" className="border-b-[3px] border-ink scroll-mt-4">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
+        <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Fonctionnement</Kicker>
           <SectionTitle>Trois gestes, et le suivi se fait tout seul.</SectionTitle>
 
-          <ol className="mt-12">
+          <ol className="motion-stagger mt-12">
             {[
               {
                 n: "01",
@@ -246,7 +246,7 @@ export default function LandingPage() {
             ].map((step) => (
               <li
                 key={step.n}
-                className="grid gap-4 border-t border-ink py-8 sm:grid-cols-[80px_1fr] sm:gap-10"
+                className="motion-row grid gap-4 border-t border-ink py-8 sm:grid-cols-[80px_1fr] sm:gap-10"
               >
                 <span className="grid h-12 w-12 place-items-center bg-offset font-mono text-[15px] tabular-nums text-paper">
                   {step.n}
@@ -267,11 +267,11 @@ export default function LandingPage() {
 
       {/* ======================= FONCTIONNALITÉS ====================== */}
       <section className="border-b-[3px] border-ink">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
+        <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Ce que ça fait</Kicker>
           <SectionTitle>Le nécessaire, et rien de plus.</SectionTitle>
 
-          <div className="mt-12 grid gap-px border border-ink bg-ink sm:grid-cols-2 lg:grid-cols-3">
+          <div className="motion-stagger mt-12 grid gap-px border border-ink bg-ink sm:grid-cols-2 lg:grid-cols-3">
             {[
               ["Parcours réutilisables", "Un modèle par type d'arrivée : développeur, commercial, nouveau client. Modifiable sans toucher aux intégrations en cours."],
               ["Échéances en jours ouvrés", "Les délais relatifs deviennent des dates réelles. Les week-ends sont exclus, les préparatifs avant l'arrivée sont gérés."],
@@ -280,7 +280,7 @@ export default function LandingPage() {
               ["Relances automatiques", "Un rappel par email la veille de l'échéance, puis chaque jour de retard, sans que personne ne les déclenche."],
               ["Historique complet", "Qui a fait quoi, quand, et ce qui a été commenté. Utile pour améliorer le parcours type."],
             ].map(([title, body]) => (
-              <div key={title} className="bg-paper p-6">
+              <div key={title} className="motion-card bg-paper p-6">
                 <h3 className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
                   {title}
                 </h3>
@@ -295,7 +295,7 @@ export default function LandingPage() {
 
       {/* ========================= COMPARAISON ======================== */}
       <section id="comparaison" className="border-b-[3px] border-ink scroll-mt-4">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
+        <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Comparaison</Kicker>
           <SectionTitle>
             Ce qu&apos;un document partagé ne fera jamais.
@@ -324,7 +324,7 @@ export default function LandingPage() {
                   ["Voir toutes les intégrations d'un coup", "Ouvrir chaque document", "Un tableau de bord"],
                   ["Améliorer la procédure pour la suite", "La copie a divergé de l'original", "Le modèle reste la référence"],
                 ].map(([need, before, after]) => (
-                  <tr key={need} className="border-b border-ink-15">
+                  <tr key={need} className="motion-row border-b border-ink-15">
                     <td className="py-4 pr-6 text-[14px] font-semibold text-ink">
                       {need}
                     </td>
@@ -344,11 +344,11 @@ export default function LandingPage() {
 
       {/* =========================== TARIFS =========================== */}
       <section id="tarifs" className="border-b-[3px] border-ink scroll-mt-4">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
+        <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Tarifs</Kicker>
           <SectionTitle>Au nombre de personnes qui suivent, pas qui sont suivies.</SectionTitle>
 
-          <div className="mt-12 grid gap-px border border-ink bg-ink lg:grid-cols-3">
+          <div className="motion-stagger mt-12 grid gap-px border border-ink bg-ink lg:grid-cols-3">
             {[
               {
                 name: "Découverte",
@@ -401,7 +401,7 @@ export default function LandingPage() {
             ].map((plan) => (
               <div
                 key={plan.name}
-                className={`flex flex-col p-7 ${
+                className={`motion-card flex flex-col p-7 ${
                   plan.highlight ? "bg-offset text-paper" : "bg-paper text-ink"
                 }`}
               >
@@ -429,7 +429,7 @@ export default function LandingPage() {
                 </p>
 
                 <ul
-                  className={`mt-7 flex-1 space-y-2.5 border-t pt-6 text-[13px] ${
+                  className={`motion-stagger mt-7 flex-1 space-y-2.5 border-t pt-6 text-[13px] ${
                     plan.highlight ? "border-paper/25" : "border-ink-15"
                   }`}
                 >
@@ -445,7 +445,7 @@ export default function LandingPage() {
 
                 <Link
                   href={plan.href}
-                  className={`mt-8 inline-flex h-11 items-center justify-center px-5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
+                  className={`motion-button mt-8 inline-flex h-11 items-center justify-center px-5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
                     plan.highlight
                       ? "bg-paper text-offset hover:bg-signal hover:text-ink"
                       : "bg-ink text-paper hover:bg-offset"
@@ -461,11 +461,11 @@ export default function LandingPage() {
 
       {/* ========================== QUESTIONS ========================= */}
       <section id="questions" className="border-b-[3px] border-ink scroll-mt-4">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
+        <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Questions</Kicker>
           <SectionTitle>Ce qu&apos;on nous demande le plus.</SectionTitle>
 
-          <dl className="mt-12 max-w-[76ch]">
+          <dl className="motion-stagger mt-12 max-w-[76ch]">
             {[
               [
                 "Que se passe-t-il si je modifie un parcours type déjà lancé ?",
@@ -488,7 +488,7 @@ export default function LandingPage() {
                 "Oui. Chaque requête est filtrée par organisation côté serveur, et la base refuse tout accès direct depuis l'extérieur.",
               ],
             ].map(([question, answer]) => (
-              <div key={question} className="border-t border-ink py-7">
+              <div key={question} className="motion-row border-t border-ink py-7">
                 <dt className="text-[15px] font-semibold text-ink">
                   {question}
                 </dt>
@@ -503,7 +503,7 @@ export default function LandingPage() {
 
       {/* ========================= CTA FINAL ========================== */}
       <section className="bg-offset text-paper">
-        <div className="mx-auto max-w-[1280px] px-6 py-20 sm:px-10 sm:py-24">
+        <div className="motion-rise mx-auto max-w-[1280px] px-6 py-20 sm:px-10 sm:py-24">
           <div className="max-w-[26ch]">
             <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper/70">
               Prêt à essayer
@@ -516,13 +516,13 @@ export default function LandingPage() {
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <Link
               href="/dashboard"
-              className="inline-flex h-11 items-center bg-paper px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-offset no-underline transition-colors duration-[120ms] hover:bg-signal hover:text-ink"
+              className="motion-button inline-flex h-11 items-center bg-paper px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-offset no-underline transition-colors duration-[120ms] hover:bg-signal hover:text-ink"
             >
               Voir la démonstration
             </Link>
             <Link
               href="/login"
-              className="inline-flex h-11 items-center border border-paper px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline transition-colors duration-[120ms] hover:bg-paper hover:text-offset"
+              className="motion-button inline-flex h-11 items-center border border-paper px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline transition-colors duration-[120ms] hover:bg-paper hover:text-offset"
             >
               Créer un compte
             </Link>

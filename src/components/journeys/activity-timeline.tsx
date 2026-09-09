@@ -61,7 +61,7 @@ export function ActivityTimeline({ entries }: { entries: ActivityEntry[] }) {
       {entries.map((entry) => (
         <li
           key={entry.id}
-          className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-ink-15 py-3"
+          className="motion-row flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-ink-15 py-3"
         >
           <span className="shrink-0 font-mono text-[10px] tabular-nums text-ink-45">
             {formatDateTime(entry.createdAt)}

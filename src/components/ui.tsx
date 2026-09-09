@@ -14,7 +14,7 @@ export function Button({
   className?: string;
 }) {
   const base =
-    "inline-flex h-9 items-center justify-center px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] transition-colors duration-[120ms]";
+    "motion-button inline-flex h-9 items-center justify-center px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] transition-colors duration-[120ms]";
   const styles = {
     primary: "bg-offset text-paper hover:bg-ink",
     secondary: "border border-ink text-ink hover:bg-ink-08",
@@ -49,7 +49,7 @@ export function Avatar({
   return (
     <span
       title={member.name}
-      className={`inline-grid shrink-0 place-items-center bg-ink font-mono text-paper ${dim}`}
+      className={`motion-avatar inline-grid shrink-0 place-items-center bg-ink font-mono text-paper ${dim}`}
     >
       {member.initials}
     </span>
@@ -74,8 +74,8 @@ export function Figure({
   }[tone];
 
   return (
-    <div className={`flex flex-col justify-between p-4 ${styles}`}>
-      <span className="font-mono text-[36px] leading-none tabular-nums">
+    <div className={`motion-card flex flex-col justify-between p-4 ${styles}`}>
+      <span className="motion-rise font-mono text-[36px] leading-none tabular-nums">
         {String(value).padStart(2, "0")}
       </span>
       <span className="mt-6 font-mono text-[10px] font-medium uppercase leading-tight tracking-[0.08em]">
@@ -96,7 +96,7 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="max-w-[480px] py-16">
+    <div className="motion-rise max-w-[480px] py-16">
       <p className="font-serif text-[40px] leading-[1.05] tracking-[-0.02em] text-ink">
         {title}
       </p>

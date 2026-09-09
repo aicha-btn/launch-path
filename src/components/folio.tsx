@@ -35,7 +35,7 @@ const CELL: Record<FolioState, string> = {
 export function Folio({ tasks }: { tasks: Task[] }) {
   return (
     <ol
-      className="flex flex-wrap gap-[3px]"
+      className="motion-folio flex flex-wrap gap-[3px]"
       aria-label={`Progression : ${tasks.length} étapes`}
     >
       {tasks.map((task) => {
@@ -62,7 +62,7 @@ export function FolioCompact({ tasks }: { tasks: Task[] }) {
   return (
     <div className="flex items-center gap-3">
       <ol
-        className="flex flex-wrap gap-[2px]"
+        className="motion-folio flex flex-wrap gap-[2px]"
         aria-label={`${done} étapes sur ${tasks.length} traitées`}
       >
         {tasks.map((task) => (

@@ -17,7 +17,7 @@ export default async function NewTemplatePage() {
   return (
     <>
       <Masthead kicker="Templates · Nouveau modèle" title="Créer un template" />
-      <div className="px-6 pb-16 pt-10 sm:px-10">
+      <div className="motion-page px-6 pb-16 pt-10 sm:px-10">
         <TemplateForm members={members} />
       </div>
     </>

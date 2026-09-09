@@ -26,7 +26,7 @@ function Submit() {
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex h-9 items-center bg-offset px-5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button inline-flex h-9 items-center bg-offset px-5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
     >
       {pending ? "Création…" : "Créer le parcours type"}
     </button>
@@ -48,9 +48,9 @@ export function TemplateForm({ members }: { members: Member[] }) {
   }
 
   return (
-    <form action={action} className="mt-10 max-w-[720px]">
+    <form action={action} className="motion-rise mt-10 max-w-[720px]">
       {/* En-tête du parcours type */}
-      <div className="space-y-5">
+      <div className="motion-stagger space-y-5">
         <div>
           <label
             htmlFor="name"
@@ -64,7 +64,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
             required
             maxLength={80}
             placeholder="Onboarding développeur"
-            className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+            className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
           />
         </div>
 
@@ -81,7 +81,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
             rows={2}
             maxLength={400}
             placeholder="À quoi sert ce parcours, et pour qui."
-            className="mt-2 w-full border border-ink-30 bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+            className="motion-input mt-2 w-full border border-ink-30 bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
           />
         </div>
 
@@ -96,7 +96,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
             id="targetType"
             name="targetType"
             defaultValue="employee"
-            className="mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none sm:w-[240px]"
+            className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none sm:w-[240px]"
           >
             <option value="employee">Collaborateur</option>
             <option value="customer">Client</option>
@@ -105,8 +105,8 @@ export function TemplateForm({ members }: { members: Member[] }) {
       </div>
 
       {/* Étapes */}
-      <div className="mt-12">
-        <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
+      <div className="motion-rise mt-12">
+        <div className="motion-rule flex items-baseline justify-between border-b-[3px] border-ink pb-2">
           <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
             Étapes
           </h2>
@@ -115,13 +115,13 @@ export function TemplateForm({ members }: { members: Member[] }) {
           </span>
         </div>
 
-        <ul>
+        <ul className="motion-stagger">
           {steps.map((step, index) => (
             <li
               key={step.key}
-              className="grid gap-3 border-b border-ink-15 py-4 sm:grid-cols-[28px_1fr_96px_150px_auto] sm:items-end sm:gap-3"
+              className="motion-row grid gap-3 border-b border-ink-15 py-4 sm:grid-cols-[28px_1fr_96px_150px_auto] sm:items-end sm:gap-3"
             >
-              <span className="grid h-6 w-6 place-items-center border border-ink-30 font-mono text-[10px] tabular-nums text-ink-45">
+              <span className="motion-avatar grid h-6 w-6 place-items-center border border-ink-30 font-mono text-[10px] tabular-nums text-ink-45">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
@@ -135,7 +135,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
                   onChange={(e) => update(step.key, { title: e.target.value })}
                   maxLength={160}
                   placeholder="Créer les comptes"
-                  className="h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+                  className="motion-input h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
                 />
               </div>
 
@@ -148,7 +148,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
                   value={step.offsetDays}
                   onChange={(e) => update(step.key, { offsetDays: e.target.value })}
                   inputMode="numeric"
-                  className="h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
+                  className="motion-input h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
                 />
               </div>
 
@@ -160,7 +160,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
                   name="stepAssignee"
                   value={step.assigneeId}
                   onChange={(e) => update(step.key, { assigneeId: e.target.value })}
-                  className="h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none"
+                  className="motion-input h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none"
                 >
                   <option value="">Non assignée</option>
                   {members.map((member) => (
@@ -182,7 +182,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
                 }
                 disabled={steps.length === 1}
                 aria-label={`Retirer l'étape ${index + 1}`}
-                className="h-9 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text disabled:text-ink-15 disabled:no-underline"
+                className="motion-link h-9 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text disabled:text-ink-15 disabled:no-underline"
               >
                 Retirer
               </button>
@@ -193,7 +193,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
         <button
           type="button"
           onClick={() => setSteps((current) => [...current, newStep()])}
-          className="mt-4 h-9 border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08"
+          className="motion-button mt-4 h-9 border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08"
         >
           Ajouter une étape
         </button>
@@ -212,7 +212,7 @@ export function TemplateForm({ members }: { members: Member[] }) {
         {state?.ok === false && (
           <p
             role="status"
-            className="font-mono text-[11px] uppercase leading-relaxed tracking-[0.08em] text-correction-text"
+            className="motion-rise font-mono text-[11px] uppercase leading-relaxed tracking-[0.08em] text-correction-text"
           >
             {state.error}
           </p>

@@ -20,9 +20,9 @@ export function Masthead({
   serif?: boolean;
 }) {
   return (
-    <header className="rule-double border-b-[3px] border-ink px-6 pb-6 pt-6 sm:px-10">
+    <header className="motion-rule rule-double border-b-[3px] border-ink px-6 pb-6 pt-6 sm:px-10">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <div className="min-w-0">
+        <div className="motion-stagger min-w-0">
           <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink-70">
             {kicker}
           </p>
@@ -43,7 +43,7 @@ export function Masthead({
         </div>
 
         {actions && (
-          <div className="flex shrink-0 items-center gap-2">{actions}</div>
+          <div className="motion-rise-delay flex shrink-0 items-center gap-2">{actions}</div>
         )}
       </div>
     </header>

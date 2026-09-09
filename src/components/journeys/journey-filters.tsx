@@ -60,7 +60,7 @@ export function JourneyFilters({
 }) {
 
   return (
-    <div className="mb-8">
+    <div className="motion-rise mb-8">
       {/* Onglets de statut : des liens, pas un select. Trois choix se
           montrent, ils ne se cachent pas dans un menu déroulant. */}
       <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-b border-ink-15 pb-3">
@@ -71,7 +71,7 @@ export function JourneyFilters({
               key={tab.value || "all"}
               href={buildHref(filters, { statut: tab.value })}
               aria-current={active ? "true" : undefined}
-              className={`font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
+              className={`motion-link inline-block font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
                 active
                   ? "text-ink underline decoration-[2px] underline-offset-[6px]"
                   : "text-ink-45 hover:text-ink"
@@ -84,7 +84,7 @@ export function JourneyFilters({
 
         <Link
           href={buildHref(filters, { retard: !filters.retard })}
-          className={`ml-auto font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
+          className={`motion-button ml-auto font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
             filters.retard
               ? "bg-correction px-2 py-[3px] text-paper"
               : "text-ink-45 hover:text-ink"
@@ -102,7 +102,7 @@ export function JourneyFilters({
           <input type="hidden" name="statut" value={filters.statut} />
         )}
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <div className="motion-stagger flex flex-col gap-3 sm:flex-row sm:items-end">
           <div className="flex-1">
             <label
               htmlFor="q"
@@ -116,7 +116,7 @@ export function JourneyFilters({
               name="q"
               defaultValue={filters.q}
               placeholder="Nom de la personne ou du client"
-              className="mt-2 h-9 w-full border-b border-ink bg-transparent text-sm text-ink placeholder:text-ink-30 focus:outline-none focus-visible:border-b-2"
+              className="motion-input mt-2 h-9 w-full border-b border-ink bg-transparent text-sm text-ink placeholder:text-ink-30 focus:outline-none focus-visible:border-b-2"
             />
           </div>
 
@@ -131,7 +131,7 @@ export function JourneyFilters({
               id="pilote"
               name="pilote"
               defaultValue={filters.pilote}
-              className="mt-2 h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none sm:w-[190px]"
+              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none sm:w-[190px]"
             >
               <option value="">Tous</option>
               {members.map((member) => (
@@ -153,7 +153,7 @@ export function JourneyFilters({
               id="tri"
               name="tri"
               defaultValue={filters.tri}
-              className="mt-2 h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none sm:w-[190px]"
+              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none sm:w-[190px]"
             >
               <option value="">Plus récents</option>
               <option value="next">Prochaine échéance</option>
@@ -162,7 +162,7 @@ export function JourneyFilters({
 
           <button
             type="submit"
-            className="h-9 shrink-0 bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
+            className="motion-button h-9 shrink-0 bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
           >
             Filtrer
           </button>
@@ -176,7 +176,7 @@ export function JourneyFilters({
           </span>
           <Link
             href="/journeys"
-            className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline hover:text-ink"
+            className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline hover:text-ink"
           >
             Réinitialiser
           </Link>

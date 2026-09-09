@@ -43,9 +43,9 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
   return (
     <>
       {/* Colonne fixe — desktop */}
-      <aside className="hidden w-[260px] shrink-0 flex-col bg-offset text-paper md:flex">
+      <aside className="motion-rise hidden w-[260px] shrink-0 flex-col bg-offset text-paper md:flex">
         <div className="px-6 pb-8 pt-6">
-          <Link href="/dashboard" className="no-underline">
+          <Link href="/dashboard" className="motion-link no-underline">
             <Logo />
           </Link>
           <p className="mt-3 truncate font-mono text-[10px] uppercase tracking-[0.08em] text-paper/60">
@@ -62,13 +62,13 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
                   {active && (
                     <span
                       aria-hidden
-                      className="absolute inset-y-0 left-0 w-[3px] bg-paper"
+                      className="motion-rule absolute inset-y-0 left-0 w-[3px] bg-paper"
                     />
                   )}
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`block px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
+                    className={`motion-link block px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
                       active ? "text-paper" : "text-paper/60 hover:text-paper"
                     }`}
                   >
@@ -82,7 +82,7 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
 
         <div className="border-t border-paper/20 px-6 py-5">
           <div className="flex items-center gap-3">
-            <span className="grid h-6 w-6 shrink-0 place-items-center bg-paper font-mono text-[10px] text-offset">
+            <span className="motion-avatar grid h-6 w-6 shrink-0 place-items-center bg-paper font-mono text-[10px] text-offset">
               {initials}
             </span>
             <span className="min-w-0 flex-1 truncate text-[12px]">
@@ -97,7 +97,7 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
             <form action={signOut} className="ml-auto">
               <button
                 type="submit"
-                className="font-mono text-[10px] uppercase tracking-[0.08em] text-paper/60 underline transition-colors duration-[120ms] hover:text-paper"
+                className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-paper/60 underline transition-colors duration-[120ms] hover:text-paper"
               >
                 Quitter
               </button>
@@ -107,19 +107,19 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
       </aside>
 
       {/* Barre horizontale — mobile */}
-      <div className="bg-offset text-paper md:hidden">
+      <div className="motion-rise bg-offset text-paper md:hidden">
         <div className="flex items-center justify-between gap-4 px-6 py-4">
-          <Link href="/dashboard" className="no-underline">
+          <Link href="/dashboard" className="motion-link no-underline">
             <Logo />
           </Link>
           <div className="flex items-center gap-3">
-            <span className="grid h-6 w-6 place-items-center bg-paper font-mono text-[10px] text-offset">
+            <span className="motion-avatar grid h-6 w-6 place-items-center bg-paper font-mono text-[10px] text-offset">
               {initials}
             </span>
             <form action={signOut}>
               <button
                 type="submit"
-                className="font-mono text-[10px] uppercase tracking-[0.08em] text-paper/60 underline"
+                className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-paper/60 underline"
               >
                 Quitter
               </button>
@@ -135,7 +135,7 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`block whitespace-nowrap px-4 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline ${
+                    className={`motion-link block whitespace-nowrap px-4 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline ${
                       active ? "bg-paper text-offset" : "text-paper/60"
                     }`}
                   >

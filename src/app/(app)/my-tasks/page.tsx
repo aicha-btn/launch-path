@@ -41,7 +41,7 @@ export default async function MyTasksPage() {
         title="Mes tâches"
       />
 
-      <div className="px-6 py-10 sm:px-10">
+      <div className="motion-page px-6 py-10 sm:px-10">
         {groups.length === 0 ? (
           <EmptyState
             title="Rien ne vous attend."
@@ -51,7 +51,7 @@ export default async function MyTasksPage() {
             apparaissent ici dès qu&apos;un onboarding vous en confie une.
           </EmptyState>
         ) : (
-          <div className="space-y-12">
+          <div className="motion-stagger space-y-12">
             {groups.map((group) => (
               <section key={group.label}>
                 <SectionRule count={group.items.length}>

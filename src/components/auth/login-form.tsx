@@ -11,7 +11,7 @@ function SubmitButton({ children }: { children: React.ReactNode }) {
     <button
       type="submit"
       disabled={pending}
-      className="h-9 w-full bg-offset font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button h-9 w-full bg-offset font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
     >
       {pending ? "Envoi…" : children}
     </button>
@@ -25,7 +25,7 @@ function DemoButton() {
     <button
       type="submit"
       disabled={pending}
-      className="h-9 w-full border border-ink font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-signal disabled:text-ink-30"
+      className="motion-button h-9 w-full border border-ink font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-signal disabled:text-ink-30"
     >
       {pending ? "Connexion…" : "Entrer avec le compte de démonstration"}
     </button>
@@ -37,7 +37,7 @@ export function LoginForm({ next }: { next: string }) {
 
   return (
     <>
-      <form action={action} className="mt-12">
+      <form action={action} className="motion-rise mt-12">
         <input type="hidden" name="suivant" value={next} />
 
         <label
@@ -57,7 +57,7 @@ export function LoginForm({ next }: { next: string }) {
           placeholder="manon@exemple.fr"
           aria-invalid={state?.ok === false}
           aria-describedby={state ? "login-message" : undefined}
-          className="mt-2 h-9 w-full border-b border-ink bg-transparent text-sm text-ink placeholder:text-ink-30 focus:outline-none focus-visible:border-b-2"
+          className="motion-input mt-2 h-9 w-full border-b border-ink bg-transparent text-sm text-ink placeholder:text-ink-30 focus:outline-none focus-visible:border-b-2"
         />
 
         <div className="mt-8">
@@ -68,7 +68,7 @@ export function LoginForm({ next }: { next: string }) {
           <p
             id="login-message"
             role="status"
-            className={`mt-4 font-mono text-[11px] uppercase leading-relaxed tracking-[0.08em] ${
+            className={`motion-rise mt-4 font-mono text-[11px] uppercase leading-relaxed tracking-[0.08em] ${
               state.ok ? "text-ink-70" : "text-correction-text"
             }`}
           >
@@ -79,7 +79,7 @@ export function LoginForm({ next }: { next: string }) {
 
       {/* Accès démonstration : sans ce raccourci, un visiteur venu de la
           page publique buterait sur un formulaire et repartirait. */}
-      <div className="mt-10 border-t border-ink pt-6">
+      <div className="motion-rise-delay mt-10 border-t border-ink pt-6">
         <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
           Ou sans inscription
         </p>
