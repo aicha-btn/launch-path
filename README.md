@@ -63,8 +63,8 @@ Calendar et Slack, pièces jointes, pagination, multi-organisation.
 | Base | PostgreSQL (Supabase), **Drizzle ORM** |
 | Auth | Supabase Auth — magic link, mot de passe pour les tests |
 | Style | Tailwind CSS 4, design system maison |
-| Emails | nodemailer vers la boîte locale ; Resend prévu en production |
-| Tests | Vitest (unitaire et intégration), Playwright (1 parcours) |
+| Emails | Mailpit en local ; Resend en production |
+| Tests | Vitest (unitaire et intégration), Playwright (4 parcours) |
 
 ---
 
@@ -208,9 +208,9 @@ des tâches assignées à quelqu'un qui n'a plus accès.
 ## Tests
 
 ```bash
-pnpm test       # 14 tests unitaires — aucune dépendance
-pnpm test:db    # 18 tests d'intégration — base requise
-pnpm test:e2e   # 1 parcours end-to-end — base + serveur
+pnpm test       # 82 tests unitaires — aucune dépendance
+pnpm test:db    # 86 tests d'intégration — base requise
+pnpm test:e2e   # 4 parcours end-to-end — base + serveur
 ```
 
 **Unitaires** — `addBusinessDays` : décalage nul un samedi, franchissement de
