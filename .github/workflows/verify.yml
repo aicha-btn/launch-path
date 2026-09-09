@@ -8,6 +8,13 @@ jobs:
   verify:
     name: pnpm verify
     runs-on: ubuntu-latest
+    env:
+      # `next build` importe les modules serveur et valide ces variables au
+      # chargement. La CI ne demarre pas de base : `pnpm verify` ne s'y connecte pas.
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder
+      CRON_SECRET: ci-placeholder
 
     steps:
       - name: Checkout
