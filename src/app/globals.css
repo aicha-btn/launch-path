@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   LaunchPath — Design System : brutalisme éditorial
+   Référence : docs/design-system.md
+   Trois couleurs. Zéro arrondi. Zéro ombre. Le rouge ne dit que le retard.
+   ========================================================================== */
+
+:root {
+  /* — Fondations : quatre encres, un rôle exclusif chacune — */
+  --paper: #f8f7f4;
+  --ink: #111110; /* texte, filets */
+  --ink-70: #4e4d4a;
+  --ink-45: #8b8a86;
+  --ink-30: #abaaa6;
+  --ink-15: #d3d2ce;
+  --ink-08: #e6e5e1;
+  --offset: #2242d8; /* identité, structure, action */
+  --offset-text: #1b35ab;
+  --signal: #ffdd00; /* emphase — aplat uniquement, jamais du texte */
+  --correction: #d8231a; /* retard, et rien d'autre */
+  --correction-text: #b81c10;
+
+  /* — Correspondance shadcn/ui : redéfinir ces noms suffit à faire
+       basculer tous ses composants dans le système — */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--offset);
+  --secondary-foreground: var(--paper);
+  --muted: var(--ink-08);
+  --muted-foreground: var(--ink-70);
+  --accent: var(--ink-08);
+  --accent-foreground: var(--ink);
+  --destructive: var(--correction);
+  --destructive-foreground: var(--paper);
+  --border: var(--ink-15);
+  --input: var(--ink-30);
+  --ring: var(--ink);
+
+  /* La règle identitaire, en une ligne */
+  --radius: 0px;
+}
+
+/* Le thème sombre est un négatif : même papier, même encres, inversés.
+   Les encres directes s'éclaircissent pour tenir leur contraste. */
+.dark {
+  --paper: #111110;
+  --ink: #f8f7f4;
+  --ink-70: #b4b3af;
+  --ink-45: #7c7b78;
+  --ink-30: #565553;
+  --ink-15: #33322f;
+  --ink-08: #232220;
+  --offset: #5b79ff;
+  --offset-text: #8fa3ff;
+  --signal: #ffdd00;
+  --correction: #ff4436;
+  --correction-text: #ff6b5f;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-70: var(--ink-70);
+  --color-ink-45: var(--ink-45);
+  --color-ink-30: var(--ink-30);
+  --color-ink-15: var(--ink-15);
+  --color-ink-08: var(--ink-08);
+  --color-offset: var(--offset);
+  --color-offset-text: var(--offset-text);
+  --color-signal: var(--signal);
+  --color-correction: var(--correction);
+  --color-correction-text: var(--correction-text);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  /* Trois familles, trois rôles exclusifs */
+  --font-sans: var(--font-archivo);
+  --font-serif: var(--font-instrument-serif);
+  --font-mono: var(--font-plex-mono);
+
+  --radius-none: 0px;
+}
+
+@layer base {
+  /* Garde-fou pour la durée du projet : empêche mécaniquement tout
+     composant shadcn installé plus tard de réintroduire un arrondi ou
+     une ombre. À remplacer par une configuration propre à la phase 12. */
+  * {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Chiffres tabulaires partout où il y a des chiffres : sans ça, les
+     colonnes de dates tremblent d'une ligne à l'autre. */
+  .font-mono,
+  table,
+  time,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Les liens sont soulignés en encre, jamais colorés. */
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  /* Contour net, aucune lueur, aucun halo coloré. */
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+}
+
+/* Filet double : signature éditoriale, un seul par page, tout en haut. */
+.rule-double {
+  border-top: 3px solid var(--ink);
+  position: relative;
+}
+.rule-double::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 6px;
+  border-top: 1px solid var(--ink);
+}
+
+/* Le papier ne bouge pas beaucoup. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,6 @@
+allowBuilds:
+  # drizzle-kit exécute ses configs TypeScript via esbuild : son script de
+  # build est nécessaire, sinon `drizzle-kit generate` refuse de démarrer.
+  esbuild: true
+  sharp: false
+  unrs-resolver: false
