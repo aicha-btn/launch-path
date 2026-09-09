@@ -1,5 +1,7 @@
 # LaunchPath
 
+[![Verify](https://github.com/aicha-btn/launch-path/actions/workflows/verify.yml/badge.svg)](https://github.com/aicha-btn/launch-path/actions/workflows/verify.yml)
+
 **Des parcours d'intégration qui se suivent tout seuls.**
 Créez un parcours type une fois, lancez-le pour une nouvelle recrue, et les
 échéances, les responsables et les retards se gèrent d'eux-mêmes.
