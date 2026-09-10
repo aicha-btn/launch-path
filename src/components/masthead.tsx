@@ -1,44 +1,45 @@
-/**
- * L'en-tête d'article, présent sur chaque écran — § 9.1.
- * Filet double en haut, filet lourd en bas.
- *
- * Règle du § 15 : le sur-titre porte la rubrique, puis un chiffre ou une
- * date réels. Jamais un ornement.
- */
+/** En-tête de contexte : où je suis, dans quel workspace, avec quelle action. */
 export function Masthead({
   kicker,
   title,
   meta,
   actions,
-  serif = true,
+  compactTitle = false,
 }: {
   kicker: string;
   title: string;
   meta?: string[];
   actions?: React.ReactNode;
-  /** Faux uniquement si le titre est trop long pour l'affichage serif. */
-  serif?: boolean;
+  /** Utile si le titre est trop long pour l'affichage large. */
+  compactTitle?: boolean;
 }) {
   return (
-    <header className="motion-rule rule-double border-b-[3px] border-ink px-6 pb-6 pt-6 sm:px-10">
+    <header className="motion-rise border-b border-line bg-surface px-6 py-6 sm:px-10">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div className="motion-stagger min-w-0">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink-70">
+          <p className="text-[13px] font-medium text-text-muted">
             {kicker}
           </p>
 
-          {serif ? (
-            <h1 className="mt-3 font-serif text-[34px] leading-[1.02] tracking-[-0.02em] text-ink sm:text-[44px]">
+          {compactTitle ? (
+            <h1 className="mt-2 text-2xl font-semibold text-text">{title}</h1>
+          ) : (
+            <h1 className="mt-2 text-[32px] font-semibold leading-tight tracking-[-0.01em] text-text sm:text-[42px]">
               {title}
             </h1>
-          ) : (
-            <h1 className="mt-3 text-2xl font-semibold text-ink">{title}</h1>
           )}
 
           {meta && meta.length > 0 && (
-            <p className="mt-4 font-mono text-[12px] tabular-nums text-ink-70">
-              {meta.join("  ·  ")}
-            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {meta.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full bg-surface-muted px-2.5 py-1 font-mono text-[11px] tabular-nums text-text-muted"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           )}
         </div>
 

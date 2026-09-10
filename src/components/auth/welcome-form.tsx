@@ -11,7 +11,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="motion-button mt-8 h-9 w-full bg-offset font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button primary-action mt-8 w-full"
     >
       {pending ? "Création…" : "Créer l'organisation"}
     </button>
@@ -25,7 +25,7 @@ export function WelcomeForm() {
     <form action={action} className="motion-rise mt-10">
       <label
         htmlFor="name"
-        className="block font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70"
+        className="field-label"
       >
         Nom de l&apos;organisation
       </label>
@@ -39,7 +39,7 @@ export function WelcomeForm() {
         autoComplete="organization"
         placeholder="Atelier Novembre"
         aria-invalid={state?.ok === false}
-        className="motion-input mt-2 h-9 w-full border-b border-ink bg-transparent text-sm text-ink placeholder:text-ink-30 focus:outline-none focus-visible:border-b-2"
+        className="motion-input field-control mt-2"
       />
 
       <SubmitButton />
@@ -47,7 +47,7 @@ export function WelcomeForm() {
       {state?.ok === false && (
         <p
           role="status"
-          className="motion-rise mt-4 font-mono text-[11px] uppercase leading-relaxed tracking-[0.08em] text-correction-text"
+          className="motion-rise mt-4 rounded-md bg-overdue-soft px-3 py-2 text-[12px] font-semibold leading-relaxed text-overdue"
         >
           {state.error}
         </p>

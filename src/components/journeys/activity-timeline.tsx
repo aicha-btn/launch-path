@@ -50,7 +50,7 @@ function describe(entry: ActivityEntry): string {
 export function ActivityTimeline({ entries }: { entries: ActivityEntry[] }) {
   if (entries.length === 0) {
     return (
-      <p className="py-5 text-[13px] text-ink-70">
+      <p className="py-5 text-[13px] text-text-muted">
         Aucune activité enregistrée pour le moment.
       </p>
     );
@@ -61,19 +61,19 @@ export function ActivityTimeline({ entries }: { entries: ActivityEntry[] }) {
       {entries.map((entry) => (
         <li
           key={entry.id}
-          className="motion-row flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-ink-15 py-3"
+          className="motion-row flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md py-3 hover:bg-primary-soft/30"
         >
-          <span className="shrink-0 font-mono text-[10px] tabular-nums text-ink-45">
+          <span className="shrink-0 font-mono text-[10px] tabular-nums text-text-soft">
             {formatDateTime(entry.createdAt)}
           </span>
 
           <span className="flex min-w-0 items-center gap-2">
             {entry.actor && <Avatar member={entry.actor} />}
-            <span className="text-[13px] text-ink">
+            <span className="text-[13px] text-text">
               <strong className="font-semibold">
                 {entry.actor?.name ?? "Quelqu'un"}
               </strong>{" "}
-              <span className="text-ink-70">{describe(entry)}</span>
+              <span className="text-text-muted">{describe(entry)}</span>
             </span>
           </span>
         </li>

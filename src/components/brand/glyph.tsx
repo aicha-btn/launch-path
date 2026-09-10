@@ -1,11 +1,6 @@
 /**
- * Le glyphe est une réduction du composant `Folio` : des étapes sur un
- * parcours, ramenées à trois carrés posés sur un filet — deux franchis,
- * un à venir. Aucun dessin décoratif n'est inventé : le logo est un
- * composant du produit, réduit.
- *
- * Hérite de `currentColor` : encre sur papier dans le contenu,
- * papier sur encre dans la sidebar.
+ * Le glyphe est un path rail compact : trois checkpoints, deux segments.
+ * Il hérite de currentColor pour rester lié au contexte.
  */
 export function Glyph({ className = "h-5 w-5" }: { className?: string }) {
   return (
@@ -15,20 +10,15 @@ export function Glyph({ className = "h-5 w-5" }: { className?: string }) {
       aria-hidden="true"
       fill="none"
     >
-      {/* le filet : le parcours */}
-      <path d="M1 12h22" stroke="currentColor" strokeWidth="2" />
-      {/* deux stations franchies */}
-      <rect x="1" y="9" width="6" height="6" fill="currentColor" />
-      <rect x="9" y="9" width="6" height="6" fill="currentColor" />
-      {/* une station à venir */}
-      <rect
-        x="17.75"
-        y="9.75"
-        width="4.5"
-        height="4.5"
+      <path
+        d="M4 12h16"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
+      <circle cx="5" cy="12" r="3.25" fill="currentColor" />
+      <circle cx="12" cy="12" r="3.25" fill="currentColor" />
+      <circle cx="19" cy="12" r="2.75" stroke="currentColor" strokeWidth="1.5" />
     </svg>
   );
 }

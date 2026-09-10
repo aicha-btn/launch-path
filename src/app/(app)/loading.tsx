@@ -11,8 +11,8 @@ export default function AppLoading() {
       <MastheadSkeleton />
       <div className="px-6 py-10 sm:px-10">
         <FiguresSkeleton />
-        <div className="mt-14 border-b-[3px] border-ink pb-2">
-          <span className="block h-3 w-32 animate-pulse bg-ink-08" />
+        <div className="mt-14 border-b border-line pb-3">
+          <span className="block h-3 w-32 animate-pulse rounded-full bg-surface-muted" />
         </div>
         <LedgerSkeleton />
       </div>

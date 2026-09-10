@@ -19,7 +19,7 @@ export default async function InvitationPage({
     body: React.ReactNode,
     action?: React.ReactNode,
   ) => (
-    <main className="motion-page min-h-dvh bg-paper px-6 py-16 sm:px-16 lg:px-24">
+    <main className="motion-page min-h-dvh bg-canvas px-6 py-16 sm:px-16 lg:px-24">
       <div className="flex min-h-[calc(100dvh-8rem)] items-center">
         <div className="motion-stagger w-full max-w-[460px]">
           <div className="rule-double pt-6">
@@ -28,15 +28,15 @@ export default async function InvitationPage({
             </Link>
           </div>
 
-          <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70">
+          <p className="mt-10 text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
             {kicker}
           </p>
 
-          <h1 className="mt-3 font-serif text-[40px] leading-[1.03] tracking-[-0.02em] text-ink">
+          <h1 className="mt-3 text-[40px] font-semibold leading-[1.04] tracking-[-0.01em] text-text">
             {title}
           </h1>
 
-          <div className="mt-6 max-w-[46ch] text-[13px] leading-relaxed text-ink-70">
+          <div className="mt-6 max-w-[46ch] text-[13px] leading-relaxed text-text-muted">
             {body}
           </div>
 
@@ -56,7 +56,7 @@ export default async function InvitationPage({
       </p>,
       <Link
         href="/"
-        className="motion-button inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink no-underline hover:bg-ink-08"
+        className="motion-button secondary-action"
       >
         Retour à l&apos;accueil
       </Link>,
@@ -84,7 +84,7 @@ export default async function InvitationPage({
       </p>,
       <Link
         href="/login"
-        className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline hover:bg-ink"
+        className="motion-button primary-action"
       >
         Se connecter
       </Link>,
@@ -102,13 +102,13 @@ export default async function InvitationPage({
     <>
       <p>
         Vous avez été invité·e en tant que{" "}
-        <strong className="font-semibold text-ink">
+        <strong className="font-semibold text-text">
           {invitation.role === "admin" ? "administrateur" : "membre"}
         </strong>
         . Vous pourrez voir les intégrations en cours et traiter les étapes qui
         vous sont assignées.
       </p>
-      <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-45">
+      <p className="text-action mt-4">
         Adresse invitée · {invitation.email}
       </p>
     </>,
@@ -117,11 +117,11 @@ export default async function InvitationPage({
         <input type="hidden" name="token" value={token} />
         <button
           type="submit"
-          className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
+          className="motion-button primary-action"
         >
           Accepter l&apos;invitation
         </button>
-        <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
+        <p className="text-action mt-3">
           Connecté en tant que {user.email}
         </p>
       </form>
@@ -129,11 +129,11 @@ export default async function InvitationPage({
       <>
         <Link
           href={`/login?suivant=${encodeURIComponent(`/invitations/${token}`)}`}
-          className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline transition-colors duration-[120ms] hover:bg-ink"
+          className="motion-button primary-action"
         >
           Se connecter pour accepter
         </Link>
-        <p className="mt-3 text-[12px] leading-relaxed text-ink-70">
+        <p className="mt-3 text-[12px] leading-relaxed text-text-muted">
           Vous reviendrez ici automatiquement après la connexion.
         </p>
       </>

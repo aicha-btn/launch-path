@@ -3,14 +3,13 @@
 import Link from "next/link";
 import { useOptimistic, useTransition } from "react";
 import { toast } from "sonner";
-import { formatShort, lateDays, today } from "@/lib/dates";
-import { Stamp } from "@/components/marks";
-import { Avatar } from "@/components/ui";
+import { lateDays } from "@/lib/dates";
+import { DueBadge, OwnerBadge } from "@/components/path-rail";
 import { setTaskStatus } from "@/server/actions/journeys";
 import type { Task, TaskStatus } from "@/types";
 
 /**
- * LA ligne du registre — § 9.3. Composant unique pour les quatre contextes :
+ * Ligne de checkpoint. Composant unique pour les quatre contextes :
  *
  *   page d'un parcours  → titre ouvrant le panneau `?task=`, action « ignorer »
  *   dashboard           → titre menant au parcours
@@ -46,7 +45,6 @@ export function TaskRow({
   const done = status === "done";
   const skipped = status === "skipped";
   const late = lateDays(task.dueDate);
-  const dueToday = task.dueDate === today() && !done && !skipped;
 
   function submit(next: TaskStatus) {
     startTransition(async () => {
@@ -70,25 +68,33 @@ export function TaskRow({
     });
   }
 
-  const boxClasses = `motion-avatar grid h-4 w-4 place-items-center border transition-colors duration-[120ms] ${
+  const visualTask = { ...task, status };
+
+  const boxClasses = `motion-avatar grid h-5 w-5 place-items-center rounded-full border-[2px] transition-colors duration-[120ms] ${
     done
-      ? "border-offset bg-offset"
+      ? "border-success bg-success"
       : skipped
-        ? "border-ink-15 bg-ink-08"
-        : "border-ink-30"
+        ? "border-line bg-surface-muted"
+        : late > 0
+          ? "border-overdue bg-overdue-soft"
+          : "border-primary bg-surface"
   }`;
 
   const mark = done ? (
-    <span className="font-mono text-[10px] leading-none text-paper">✕</span>
+    <span className="text-[11px] font-bold leading-none text-surface">✓</span>
   ) : null;
 
   const titleClasses = `truncate text-[13px] font-semibold sm:text-sm ${
-    done ? "text-ink-45 line-through" : skipped ? "text-ink-30" : "text-ink"
+    done
+      ? "text-text-soft line-through"
+      : skipped
+        ? "text-text-soft"
+        : "text-text"
   }`;
 
   return (
     <div
-      className={`motion-row grid min-h-10 grid-cols-[16px_1fr_auto] items-center gap-3 border-b border-ink-15 px-2 py-2 transition-colors duration-[120ms] hover:bg-ink-08 sm:grid-cols-[16px_1fr_auto_auto_92px] sm:gap-4 sm:py-0 ${
+      className={`motion-row grid min-h-[58px] grid-cols-[20px_minmax(0,1fr)_auto] items-center gap-3 rounded-md border border-line bg-surface px-3 py-3 transition-colors duration-[120ms] hover:border-primary-soft hover:bg-surface-raised sm:grid-cols-[20px_minmax(0,1fr)_auto_auto_128px] sm:gap-4 ${
         pending ? "opacity-60" : ""
       }`}
     >
@@ -104,7 +110,7 @@ export function TaskRow({
           aria-label={
             done ? `Rouvrir « ${task.title} »` : `Terminer « ${task.title} »`
           }
-          className={`${boxClasses} ${done ? "" : "hover:border-ink"}`}
+          className={`${boxClasses} ${done ? "" : "hover:border-primary hover:bg-primary-soft"}`}
         >
           {mark}
         </button>
@@ -120,21 +126,15 @@ export function TaskRow({
             <span className={titleClasses}>{task.title}</span>
           )}
           {skipped && (
-            <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-30">
+            <span className="text-action ml-2 text-line-strong">
               Ignorée
             </span>
           )}
         </p>
       </div>
 
-      <div className="flex items-center gap-3">
-        {task.assignee ? (
-          <Avatar member={task.assignee} />
-        ) : (
-          <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-30">
-            Non assignée
-          </span>
-        )}
+      <div className="flex min-w-0 items-center gap-3">
+        <OwnerBadge member={task.assignee} showName={false} />
       </div>
 
       {/* Le statut `skipped` doit être atteignable depuis l'interface. */}
@@ -143,7 +143,7 @@ export function TaskRow({
           <button
             type="button"
             onClick={() => submit(skipped ? "todo" : "skipped")}
-            className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-ink"
+            className="motion-link text-action"
           >
             {skipped ? "Réactiver" : "Ignorer"}
           </button>
@@ -151,21 +151,7 @@ export function TaskRow({
       </div>
 
       <div className="col-start-2 sm:col-start-5 sm:text-right">
-        {late > 0 && !done && !skipped ? (
-          <Stamp>{`Retard ${late} j`}</Stamp>
-        ) : (
-          <span
-            className={`font-mono text-[12px] tabular-nums ${
-              dueToday
-                ? "text-ink underline decoration-1 underline-offset-[3px]"
-                : done || skipped
-                  ? "text-ink-30"
-                  : "text-ink-70"
-            }`}
-          >
-            {formatShort(task.dueDate)}
-          </span>
-        )}
+        <DueBadge task={visualTask} />
       </div>
     </div>
   );

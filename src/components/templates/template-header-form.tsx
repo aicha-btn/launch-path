@@ -12,7 +12,7 @@ function Submit() {
     <button
       type="submit"
       disabled={pending}
-      className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button primary-action"
     >
       {pending ? "Enregistrement…" : "Enregistrer"}
     </button>
@@ -29,13 +29,16 @@ export function TemplateHeaderForm({ template }: { template: Template }) {
   }, [state]);
 
   return (
-    <form action={action} className="motion-stagger mt-6 max-w-[640px] space-y-5">
+    <form
+      action={action}
+      className="motion-stagger mt-6 max-w-[640px] rounded-lg border border-line bg-surface p-5"
+    >
       <input type="hidden" name="templateId" value={template.id} />
 
       <div>
         <label
           htmlFor="name"
-          className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+          className="field-label"
         >
           Nom
         </label>
@@ -45,14 +48,14 @@ export function TemplateHeaderForm({ template }: { template: Template }) {
           required
           maxLength={80}
           defaultValue={template.name}
-          className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+          className="motion-input field-control mt-2"
         />
       </div>
 
       <div>
         <label
           htmlFor="description"
-          className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+          className="field-label"
         >
           Description
         </label>
@@ -62,14 +65,14 @@ export function TemplateHeaderForm({ template }: { template: Template }) {
           rows={2}
           maxLength={400}
           defaultValue={template.description}
-          className="motion-input mt-2 w-full border border-ink-30 bg-paper px-3 py-2 text-sm text-ink focus:border-ink focus:outline-none"
+          className="motion-input field-control mt-2"
         />
       </div>
 
       <div>
         <label
           htmlFor="targetType"
-          className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+          className="field-label"
         >
           Type de cible
         </label>
@@ -77,7 +80,7 @@ export function TemplateHeaderForm({ template }: { template: Template }) {
           id="targetType"
           name="targetType"
           defaultValue={template.targetType}
-          className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none sm:w-[240px]"
+          className="motion-input field-control mt-2 sm:w-[240px]"
         >
           <option value="employee">Collaborateur</option>
           <option value="customer">Client</option>

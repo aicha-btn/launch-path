@@ -38,7 +38,7 @@ export default async function TemplatesPage() {
           <div className="motion-stagger space-y-12">
             <section>
               <SectionRule count={live.length}>Actifs</SectionRule>
-              <ul>
+              <ul className="mt-4 grid gap-4 lg:grid-cols-2">
                 {live.map((template) => {
                   const assignees = [
                     ...new Map(
@@ -51,14 +51,14 @@ export default async function TemplatesPage() {
                   return (
                     <li
                       key={template.id}
-                      className="motion-row border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
+                      className="motion-card rounded-lg border border-line bg-surface p-5 transition-colors duration-[160ms] hover:border-primary-soft hover:bg-surface-raised"
                     >
                       <Link
                         href={`/templates/${template.id}`}
-                        className="block px-2 py-5 no-underline"
+                        className="block no-underline"
                       >
                         <div className="flex flex-wrap items-baseline justify-between gap-3">
-                          <p className="text-[15px] font-semibold text-ink">
+                          <p className="text-[16px] font-semibold tracking-[-0.01em] text-text">
                             {template.name}
                           </p>
                           <StatusLabel>
@@ -69,10 +69,31 @@ export default async function TemplatesPage() {
                         </div>
 
                         {template.description && (
-                          <p className="mt-2 max-w-[70ch] text-[13px] leading-relaxed text-ink-70">
+                          <p className="mt-2 max-w-[70ch] text-[13px] leading-relaxed text-text-muted">
                             {template.description}
                           </p>
                         )}
+
+                        <div
+                          aria-hidden
+                          className="mt-5 flex max-w-[240px] items-center"
+                        >
+                          {template.steps.slice(0, 6).map((step, index) => {
+                            const isLast =
+                              index === Math.min(template.steps.length, 6) - 1;
+                            return (
+                              <span
+                                key={step.id}
+                                className={`flex items-center ${isLast ? "shrink-0" : "flex-1"}`}
+                              >
+                                <span className="h-3 w-3 rounded-full border-2 border-primary bg-primary" />
+                                {!isLast && (
+                                  <span className="h-[2px] flex-1 bg-line" />
+                                )}
+                              </span>
+                            );
+                          })}
+                        </div>
 
                         {assignees.length > 0 && (
                           <div className="mt-4 flex items-center gap-[2px]">
@@ -95,11 +116,11 @@ export default async function TemplatesPage() {
                   {archived.map((template) => (
                     <li
                       key={template.id}
-                      className="motion-row flex flex-wrap items-baseline justify-between gap-3 border-b border-ink-15 py-4"
+                      className="motion-row flex flex-wrap items-baseline justify-between gap-3 border-b border-line py-4"
                     >
                       <Link
                         href={`/templates/${template.id}`}
-                        className="motion-link text-[15px] font-semibold text-ink-45 line-through no-underline hover:text-ink-70"
+                        className="motion-link text-[15px] font-semibold text-text-soft line-through no-underline hover:text-text-muted"
                       >
                         {template.name}
                       </Link>

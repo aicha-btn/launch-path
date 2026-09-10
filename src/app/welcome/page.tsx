@@ -8,7 +8,7 @@ import { getCurrentMembership, getCurrentUser } from "@/server/auth/session";
  *
  * La route s'appelle `/welcome` et non `/onboarding` : dans un produit dont
  * le métier EST l'onboarding, ce mot est réservé aux parcours des personnes
- * intégrées. Voir docs/design-system.md § 4.
+ * intégrées.
  */
 export default async function WelcomePage() {
   const user = await getCurrentUser();
@@ -19,24 +19,24 @@ export default async function WelcomePage() {
   if (membership) redirect("/dashboard");
 
   return (
-    <main className="motion-page min-h-dvh bg-paper px-6 py-16 sm:px-16 lg:px-24">
+    <main className="motion-page min-h-dvh bg-canvas px-6 py-16 sm:px-16 lg:px-24">
       <div className="flex min-h-[calc(100dvh-8rem)] items-center">
         <div className="motion-stagger w-full max-w-[460px]">
           <div className="rule-double pt-6">
             <Logo />
           </div>
 
-          <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70">
+          <p className="mt-10 text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
             Première connexion
           </p>
 
-          <h1 className="mt-3 font-serif text-[44px] leading-[1.02] tracking-[-0.02em] text-ink">
+          <h1 className="mt-3 text-[42px] font-semibold leading-[1.04] tracking-[-0.01em] text-text">
             Créez votre
             <br />
             organisation.
           </h1>
 
-          <p className="mt-6 max-w-[46ch] text-[13px] leading-relaxed text-ink-70">
+          <p className="mt-6 max-w-[46ch] text-[13px] leading-relaxed text-text-muted">
             Elle regroupe vos parcours types, vos intégrations en cours et les
             membres de votre équipe. Vous en serez administrateur, et pourrez
             inviter vos collègues ensuite.
@@ -44,8 +44,8 @@ export default async function WelcomePage() {
 
           <WelcomeForm />
 
-          <div className="mt-12 border-t border-ink-15 pt-5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
+          <div className="mt-12 border-t border-line pt-5">
+            <p className="text-action">
               Connecté en tant que {user.email}
             </p>
           </div>

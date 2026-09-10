@@ -62,7 +62,7 @@ export default async function MyTasksPage() {
                     <li key={task.id}>
                       {/* Le nom de la personne concernée : sur cet écran, la
                           tâche est sortie de son contexte. */}
-                      <p className="px-2 pt-3 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
+                      <p className="text-action px-2 pt-3">
                         {subjectName}
                       </p>
                       <TaskRow task={task} titleHref={`/journeys/${journeyId}?task=${task.id}`} />

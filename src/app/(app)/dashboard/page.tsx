@@ -1,16 +1,46 @@
 import Link from "next/link";
 import { Masthead } from "@/components/masthead";
-import { FolioCompact } from "@/components/folio";
-import { JourneyStatusLabel, SectionRule, Stamp } from "@/components/marks";
+import { SectionRule } from "@/components/marks";
+import { DueBadge, OwnerBadge, currentTask } from "@/components/path-rail";
+import { JourneyCard } from "@/components/journeys/journey-card";
 import { Button, EmptyState, Figure } from "@/components/ui";
 import { TaskRow } from "@/components/journeys/task-row";
-import { formatLong, formatShort, lateDays, today } from "@/lib/dates";
+import { formatLong, today } from "@/lib/dates";
 import { requireMembership } from "@/server/auth/session";
 import {
   getActiveJourneys,
   getDashboardCounts,
+  type LateTask,
   getLateTasks,
 } from "@/server/db/queries/journeys";
+
+type NextAction = LateTask & { tone: "attention" | "current" };
+
+function nextActions(
+  active: Awaited<ReturnType<typeof getActiveJourneys>>,
+  lateTasks: LateTask[],
+) {
+  const map = new Map<string, NextAction>();
+
+  for (const item of lateTasks) {
+    map.set(item.task.id, { ...item, tone: "attention" });
+  }
+
+  for (const journey of active) {
+    const task = currentTask(journey.tasks);
+    if (!task || map.has(task.id)) continue;
+    map.set(task.id, {
+      task,
+      journeyId: journey.id,
+      subjectName: journey.subjectName,
+      tone: "current",
+    });
+  }
+
+  return [...map.values()].sort((a, b) =>
+    a.task.dueDate.localeCompare(b.task.dueDate),
+  );
+}
 
 export default async function DashboardPage() {
   const membership = await requireMembership();
@@ -22,6 +52,8 @@ export default async function DashboardPage() {
     getActiveJourneys(org),
     getLateTasks(org),
   ]);
+  const actions = nextActions(active, lateTasks);
+  const focus = actions[0] ?? null;
 
   return (
     <>
@@ -31,15 +63,72 @@ export default async function DashboardPage() {
         actions={<Button href="/journeys/new">Lancer un onboarding</Button>}
       />
 
-      <div className="motion-page px-6 py-10 sm:px-10">
-        {/* Chaque encre garde son sens : bleu pour la structure, jaune pour
-            l'emphase, rouge pour le seul retard. Les compteurs viennent de
-            requêtes SQL, pas d'un filtre en mémoire. */}
-        <div className="motion-stagger grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <Figure tone="offset" value={counts.activeJourneys} label="Onboardings actifs" />
-          <Figure tone="correction" value={counts.lateTasks} label="Tâches en retard" />
-          <Figure tone="signal" value={counts.dueSoon} label="Dues sous 7 jours" />
-          <Figure tone="paper" value={counts.completedThisMonth} label="Terminés ce mois" />
+      <div className="motion-page mx-auto max-w-[1180px] px-6 py-8 sm:px-10">
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)]">
+          <section className="motion-card rounded-lg border border-line bg-surface-raised p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
+                  Prochaine action
+                </p>
+                <h2 className="mt-2 text-[26px] font-semibold leading-tight tracking-[-0.01em] text-text">
+                  {focus
+                    ? "Le prochain checkpoint est clair."
+                    : "Tout est sous contrôle aujourd'hui."}
+                </h2>
+              </div>
+              <span className="rounded-full bg-primary-soft px-3 py-1 text-[12px] font-semibold text-primary-text">
+                {actions.length} action{actions.length > 1 ? "s" : ""}
+              </span>
+            </div>
+
+            {focus ? (
+              <Link
+                href={`/journeys/${focus.journeyId}?task=${focus.task.id}`}
+                className="mt-6 grid gap-4 rounded-md border border-line bg-surface p-4 no-underline transition-colors duration-[160ms] hover:border-primary-soft hover:bg-primary-soft/40 sm:grid-cols-[minmax(0,1fr)_auto]"
+              >
+                <div className="min-w-0">
+                  <p className="truncate text-[18px] font-semibold text-text">
+                    {focus.task.title}
+                  </p>
+                  <p className="mt-1 text-[13px] text-text-muted">
+                    {focus.subjectName}
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <OwnerBadge member={focus.task.assignee} />
+                    <DueBadge task={focus.task} />
+                  </div>
+                </div>
+                <span className="self-end text-[13px] font-semibold text-primary-text">
+                  Ouvrir le checkpoint
+                </span>
+              </Link>
+            ) : (
+              <div className="mt-6 rounded-md border border-line bg-surface p-4 text-[13px] leading-relaxed text-text-muted">
+                Aucun checkpoint ne demande une intervention immédiate. Les
+                parcours actifs peuvent continuer leur trajectoire.
+              </div>
+            )}
+          </section>
+
+          <section className="motion-stagger grid grid-cols-2 gap-3">
+            <Figure
+              tone="offset"
+              value={counts.activeJourneys}
+              label="Parcours actifs"
+            />
+            <Figure
+              tone="correction"
+              value={counts.lateTasks}
+              label="Checkpoints en retard"
+            />
+            <Figure tone="signal" value={counts.dueSoon} label="À venir sous 7 jours" />
+            <Figure
+              tone="paper"
+              value={counts.completedThisMonth}
+              label="Arrivés à destination"
+            />
+          </section>
         </div>
 
         {active.length === 0 ? (
@@ -53,60 +142,21 @@ export default async function DashboardPage() {
             </EmptyState>
           </div>
         ) : (
-          <section className="motion-rise mt-14">
+          <section className="motion-rise mt-10">
             <SectionRule count={active.length}>Parcours actifs</SectionRule>
 
-            <ul>
-              {active.map((journey) => {
-                const late = journey.tasks.filter(
-                  (t) => t.status === "todo" && lateDays(t.dueDate) > 0,
-                ).length;
-                const next = journey.tasks.find((t) => t.status === "todo");
-
-                return (
-                  <li
-                    key={journey.id}
-                    className="motion-row border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
-                  >
-                    <Link
-                      href={`/journeys/${journey.id}`}
-                      className="grid gap-3 px-2 py-4 no-underline sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-6"
-                    >
-                      <div className="min-w-0">
-                        <p className="truncate text-[15px] font-semibold text-ink">
-                          {journey.subjectName}
-                        </p>
-                        <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70">
-                          {journey.templateName}
-                        </p>
-                      </div>
-
-                      <FolioCompact tasks={journey.tasks} />
-
-                      <div className="sm:w-[140px] sm:text-right">
-                        {late > 0 ? (
-                          <Stamp>{`Retard ${late} tâche${late > 1 ? "s" : ""}`}</Stamp>
-                        ) : next ? (
-                          <span className="font-mono text-[12px] tabular-nums text-ink-70">
-                            {formatShort(next.dueDate)}
-                          </span>
-                        ) : (
-                          <JourneyStatusLabel status={journey.status} />
-                        )}
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="motion-stagger mt-4 grid gap-4 lg:grid-cols-2">
+              {active.map((journey) => (
+                <JourneyCard key={journey.id} journey={journey} />
+              ))}
+            </div>
           </section>
         )}
 
-        {/* Le seul bloc rouge de la page. */}
         {lateTasks.length > 0 && (
-          <section className="motion-rise mt-14">
-            <SectionRule count={lateTasks.length}>Tâches en retard</SectionRule>
-            <ul>
+          <section className="motion-rise mt-10">
+            <SectionRule count={lateTasks.length}>Checkpoints à rattraper</SectionRule>
+            <ul className="mt-4 space-y-2">
               {lateTasks.map(({ task, journeyId }) => (
                 <li key={task.id}>
                   <TaskRow task={task} titleHref={`/journeys/${journeyId}?task=${task.id}`} />

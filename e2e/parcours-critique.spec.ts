@@ -23,7 +23,7 @@ test("de la connexion à la première étape cochée", async ({ page }) => {
 
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: /ne devraient pas vivre/i }),
+    page.getByRole("heading", { name: /LaunchPath orchestre/i }),
   ).toBeVisible();
 
   await page.getByRole("link", { name: /voir la démonstration/i }).first().click();

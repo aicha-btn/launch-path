@@ -3,11 +3,7 @@
 import { Toaster as Sonner } from "sonner";
 
 /**
- * Toasts — § 8. Aplat d'encre, texte papier, bordure gauche de 3 px :
- * papier en cas de succès, rouge en cas d'erreur.
- *
- * Monté dès maintenant même sans action à confirmer : le rajouter à la fin
- * obligerait à repasser sur toutes les mutations.
+ * Toasts : surface légère, signal d'état par bord et texte.
  */
 export function Toaster() {
   return (
@@ -17,13 +13,11 @@ export function Toaster() {
         unstyled: true,
         classNames: {
           toast:
-            "flex w-full items-start gap-3 border-l-[3px] border-paper bg-ink px-4 py-3 text-paper",
-          error: "border-l-correction",
-          title:
-            "font-mono text-[11px] font-medium uppercase tracking-[0.08em]",
-          description: "mt-1 text-[13px] leading-snug text-paper/70",
-          actionButton:
-            "ml-auto font-mono text-[11px] uppercase tracking-[0.08em] underline",
+            "flex w-full items-start gap-3 rounded-md border border-line bg-surface-raised px-4 py-3 text-text shadow-[var(--shadow-active)]",
+          error: "border-overdue bg-overdue-soft text-overdue",
+          title: "text-[13px] font-semibold",
+          description: "mt-1 text-[13px] leading-snug text-text-muted",
+          actionButton: "ml-auto text-[12px] font-semibold underline",
         },
       }}
     />

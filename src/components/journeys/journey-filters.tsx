@@ -58,36 +58,37 @@ export function JourneyFilters({
    */
   isFiltered: boolean;
 }) {
-
   return (
     <div className="motion-rise mb-8">
       {/* Onglets de statut : des liens, pas un select. Trois choix se
           montrent, ils ne se cachent pas dans un menu déroulant. */}
-      <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-b border-ink-15 pb-3">
-        {STATUS_TABS.map((tab) => {
-          const active = filters.statut === tab.value;
-          return (
-            <Link
-              key={tab.value || "all"}
-              href={buildHref(filters, { statut: tab.value })}
-              aria-current={active ? "true" : undefined}
-              className={`motion-link inline-block font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
-                active
-                  ? "text-ink underline decoration-[2px] underline-offset-[6px]"
-                  : "text-ink-45 hover:text-ink"
-              }`}
-            >
-              {tab.label}
-            </Link>
-          );
-        })}
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap gap-1 rounded-full bg-surface-muted p-1">
+          {STATUS_TABS.map((tab) => {
+            const active = filters.statut === tab.value;
+            return (
+              <Link
+                key={tab.value || "all"}
+                href={buildHref(filters, { statut: tab.value })}
+                aria-current={active ? "true" : undefined}
+                className={`motion-link rounded-full px-3 py-1.5 text-[12px] font-semibold no-underline transition-colors duration-[120ms] ${
+                  active
+                    ? "bg-surface text-primary-text"
+                    : "text-text-muted hover:text-primary-text"
+                }`}
+              >
+                {tab.label}
+              </Link>
+            );
+          })}
+        </div>
 
         <Link
           href={buildHref(filters, { retard: !filters.retard })}
-          className={`motion-button ml-auto font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
+          className={`motion-button ml-auto inline-flex h-9 items-center rounded-full px-3 text-[12px] font-semibold no-underline transition-colors duration-[120ms] ${
             filters.retard
-              ? "bg-correction px-2 py-[3px] text-paper"
-              : "text-ink-45 hover:text-ink"
+              ? "bg-overdue-soft text-overdue"
+              : "bg-surface text-text-muted ring-1 ring-line hover:text-primary-text"
           }`}
         >
           En retard uniquement
@@ -106,24 +107,23 @@ export function JourneyFilters({
           <div className="flex-1">
             <label
               htmlFor="q"
-              className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+              className="field-label"
             >
               Recherche
             </label>
-            {/* Exception du système : champ souligné, sans cadre. */}
             <input
               id="q"
               name="q"
               defaultValue={filters.q}
               placeholder="Nom de la personne ou du client"
-              className="motion-input mt-2 h-9 w-full border-b border-ink bg-transparent text-sm text-ink placeholder:text-ink-30 focus:outline-none focus-visible:border-b-2"
+              className="motion-input field-control mt-2"
             />
           </div>
 
           <div>
             <label
               htmlFor="pilote"
-              className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+              className="field-label"
             >
               Pilote
             </label>
@@ -131,7 +131,7 @@ export function JourneyFilters({
               id="pilote"
               name="pilote"
               defaultValue={filters.pilote}
-              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none sm:w-[190px]"
+              className="motion-input field-control mt-2 sm:w-[190px]"
             >
               <option value="">Tous</option>
               {members.map((member) => (
@@ -145,7 +145,7 @@ export function JourneyFilters({
           <div>
             <label
               htmlFor="tri"
-              className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+              className="field-label"
             >
               Tri
             </label>
@@ -153,7 +153,7 @@ export function JourneyFilters({
               id="tri"
               name="tri"
               defaultValue={filters.tri}
-              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none sm:w-[190px]"
+              className="motion-input field-control mt-2 sm:w-[190px]"
             >
               <option value="">Plus récents</option>
               <option value="next">Prochaine échéance</option>
@@ -162,7 +162,7 @@ export function JourneyFilters({
 
           <button
             type="submit"
-            className="motion-button h-9 shrink-0 bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
+            className="motion-button primary-action shrink-0"
           >
             Filtrer
           </button>
@@ -171,12 +171,12 @@ export function JourneyFilters({
 
       {isFiltered && (
         <div className="mt-4 flex flex-wrap items-center gap-4">
-          <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70">
+          <span className="text-action text-text-muted">
             {resultCount} résultat{resultCount > 1 ? "s" : ""}
           </span>
           <Link
             href="/journeys"
-            className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline hover:text-ink"
+            className="motion-link text-action underline"
           >
             Réinitialiser
           </Link>

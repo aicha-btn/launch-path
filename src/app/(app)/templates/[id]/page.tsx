@@ -59,7 +59,7 @@ export default async function TemplateDetailPage({
               />
               <button
                 type="submit"
-                className="motion-button inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08"
+                className="motion-button secondary-action"
               >
                 {template.isArchived ? "Réactiver" : "Archiver"}
               </button>
@@ -70,11 +70,11 @@ export default async function TemplateDetailPage({
 
       <div className="motion-page px-6 pb-16 pt-10 sm:px-10">
         {template.isArchived && (
-          <div className="motion-rise mb-10 max-w-[640px] border border-ink bg-signal p-4">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
+          <div className="motion-rise mb-10 max-w-[640px] rounded-lg border border-line bg-warning-soft p-4">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-warning">
               Parcours type archivé
             </p>
-            <p className="mt-2 text-[13px] leading-relaxed text-ink">
+            <p className="mt-2 text-[13px] leading-relaxed text-text-muted">
               Il n&apos;apparaît plus au moment de lancer un onboarding. Les
               onboardings déjà lancés depuis ce modèle ne sont pas affectés :
               leurs étapes ont été copiées au lancement.
@@ -97,10 +97,10 @@ export default async function TemplateDetailPage({
             />
           </div>
 
-          <p className="mt-8 max-w-[62ch] text-[12px] leading-relaxed text-ink-70">
+          <p className="mt-8 max-w-[62ch] text-[12px] leading-relaxed text-text-muted">
             Le délai est relatif à la date d&apos;arrivée, en jours ouvrés.
             Modifier ce parcours type{" "}
-            <strong className="font-semibold text-ink">
+            <strong className="font-semibold text-text">
               ne change rien aux onboardings déjà lancés
             </strong>{" "}
             : leurs étapes ont été copiées au moment du lancement.

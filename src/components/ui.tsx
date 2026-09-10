@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Member } from "@/types";
 
-/** Bouton — § 8. Hauteur 36 px, mono capitales, aucun arrondi. */
+/** Bouton : net, utilisable, avec un radius modéré propre au produit. */
 export function Button({
   children,
   href,
@@ -14,11 +14,12 @@ export function Button({
   className?: string;
 }) {
   const base =
-    "motion-button inline-flex h-9 items-center justify-center px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] transition-colors duration-[120ms]";
+    "motion-button inline-flex h-10 items-center justify-center rounded-full px-4 text-[13px] font-semibold transition-colors duration-[120ms]";
   const styles = {
-    primary: "bg-offset text-paper hover:bg-ink",
-    secondary: "border border-ink text-ink hover:bg-ink-08",
-    quiet: "text-ink-70 hover:text-ink",
+    primary: "bg-primary text-surface hover:bg-primary-text",
+    secondary:
+      "border border-line-strong bg-surface text-text hover:border-primary hover:text-primary-text",
+    quiet: "text-text-muted hover:text-primary-text",
   }[variant];
 
   const classes = `${base} ${styles} ${className}`;
@@ -37,7 +38,7 @@ export function Button({
   );
 }
 
-/** Carré d'encre à initiales — jamais un cercle, jamais une photo. */
+/** Initiales humaines : ownership et handoff, pas décoration. */
 export function Avatar({
   member,
   size = "sm",
@@ -45,18 +46,18 @@ export function Avatar({
   member: Member;
   size?: "sm" | "lg";
 }) {
-  const dim = size === "lg" ? "h-8 w-8 text-[11px]" : "h-6 w-6 text-[10px]";
+  const dim = size === "lg" ? "h-9 w-9 text-[12px]" : "h-7 w-7 text-[11px]";
   return (
     <span
       title={member.name}
-      className={`motion-avatar inline-grid shrink-0 place-items-center bg-ink font-mono text-paper ${dim}`}
+      className={`motion-avatar inline-grid shrink-0 place-items-center rounded-full bg-primary-soft font-semibold text-primary-text ${dim}`}
     >
       {member.initials}
     </span>
   );
 }
 
-/** Chiffre du dashboard, posé sur un aplat d'encre directe. */
+/** Chiffre de synthèse, pensé comme instrument de cockpit. */
 export function Figure({
   value,
   label,
@@ -67,18 +68,18 @@ export function Figure({
   tone?: "paper" | "offset" | "signal" | "correction";
 }) {
   const styles = {
-    paper: "border border-ink bg-paper text-ink",
-    offset: "border border-offset bg-offset text-paper",
-    signal: "border border-ink bg-signal text-ink",
-    correction: "border border-correction bg-correction text-paper",
+    paper: "border border-line bg-surface text-text",
+    offset: "border border-primary-soft bg-primary-soft text-primary-text",
+    signal: "border border-warning-soft bg-warning-soft text-warning",
+    correction: "border border-overdue-soft bg-overdue-soft text-overdue",
   }[tone];
 
   return (
-    <div className={`motion-card flex flex-col justify-between p-4 ${styles}`}>
-      <span className="motion-rise font-mono text-[36px] leading-none tabular-nums">
+    <div className={`motion-card flex min-h-[120px] flex-col justify-between rounded-md p-4 ${styles}`}>
+      <span className="motion-rise font-mono text-[34px] leading-none tabular-nums">
         {String(value).padStart(2, "0")}
       </span>
-      <span className="mt-6 font-mono text-[10px] font-medium uppercase leading-tight tracking-[0.08em]">
+      <span className="mt-6 text-[12px] font-semibold leading-tight text-current">
         {label}
       </span>
     </div>
@@ -96,11 +97,18 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="motion-rise max-w-[480px] py-16">
-      <p className="font-serif text-[40px] leading-[1.05] tracking-[-0.02em] text-ink">
+    <div className="motion-rise max-w-[520px] rounded-lg bg-surface p-6 ring-1 ring-line">
+      <div aria-hidden className="mb-6 flex max-w-[180px] items-center">
+        <span className="h-3 w-3 rounded-full border-2 border-primary bg-primary" />
+        <span className="h-[2px] flex-1 bg-line" />
+        <span className="h-3 w-3 rounded-full border-2 border-line-strong bg-surface" />
+        <span className="h-[2px] flex-1 bg-line" />
+        <span className="h-3 w-3 rounded-full border-2 border-line-strong bg-surface" />
+      </div>
+      <p className="text-[30px] font-semibold leading-tight tracking-[-0.01em] text-text sm:text-[36px]">
         {title}
       </p>
-      <div className="mt-5 border-t border-ink pt-5 text-[13px] leading-relaxed text-ink-70">
+      <div className="mt-5 border-t border-line pt-5 text-[13px] leading-relaxed text-text-muted">
         {children}
       </div>
       {action && <div className="mt-6">{action}</div>}

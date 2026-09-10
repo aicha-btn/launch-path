@@ -1,11 +1,11 @@
 import type { JourneyStatus } from "@/types";
 
 /**
- * Les états sont des marques typographiques, pas des couleurs
- * — docs/design-system.md § 7. Le rouge ne dit qu'une chose : le retard.
+ * Les états combinent texte, forme et couleur : la couleur n'est jamais le
+ * seul signal.
  */
 
-/** Le seul élément coloré en rouge du produit. */
+/** Indicateur d'attention : plus de tampon, le risque s'intègre au parcours. */
 export function Stamp({
   children,
   tilted = false,
@@ -15,7 +15,7 @@ export function Stamp({
 }) {
   return (
     <span
-      className={`motion-stamp inline-block bg-correction px-2 py-[3px] font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper ${
+      className={`motion-stamp inline-flex items-center rounded-full bg-overdue-soft px-2.5 py-1 text-[12px] font-semibold leading-none text-overdue ring-1 ring-overdue/20 ${
         tilted ? "-rotate-2" : ""
       }`}
     >
@@ -24,7 +24,7 @@ export function Stamp({
   );
 }
 
-/** Micro-libellé : nœud carré + mono capitales. Pas de pilule arrondie. */
+/** Micro-libellé : un node et un texte, pas seulement une couleur. */
 export function StatusLabel({
   children,
   tone = "neutral",
@@ -34,22 +34,22 @@ export function StatusLabel({
 }) {
   const text =
     tone === "offset"
-      ? "text-offset-text"
+      ? "text-primary-text"
       : tone === "muted"
-        ? "text-ink-30"
-        : "text-ink-70";
+        ? "text-text-soft"
+        : "text-text-muted";
   const node =
     tone === "offset"
-      ? "bg-offset"
+      ? "bg-primary"
       : tone === "muted"
-        ? "bg-ink-30"
-        : "bg-ink-70";
+        ? "bg-line-strong"
+        : "bg-text-muted";
 
   return (
     <span
-      className={`motion-status inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] ${text}`}
+      className={`motion-status inline-flex items-center gap-2 rounded-full bg-surface px-2.5 py-1 text-[12px] font-medium ${text}`}
     >
-      <span aria-hidden className={`h-1.5 w-1.5 ${node}`} />
+      <span aria-hidden className={`h-2 w-2 rounded-full ${node}`} />
       {children}
     </span>
   );
@@ -69,7 +69,7 @@ export function JourneyStatusLabel({ status }: { status: JourneyStatus }) {
   );
 }
 
-/** Sur-titre de section : mono capitales sur filet lourd. */
+/** En-tête de section : clair, respirant, aligné sur le langage de rail. */
 export function SectionRule({
   children,
   count,
@@ -78,12 +78,12 @@ export function SectionRule({
   count?: number;
 }) {
   return (
-    <div className="motion-rule flex items-baseline justify-between border-b-[3px] border-ink pb-2">
-      <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
+    <div className="motion-rule flex items-center justify-between border-b border-line pb-3">
+      <h2 className="text-[14px] font-semibold text-text">
         {children}
       </h2>
       {count !== undefined && (
-        <span className="font-mono text-[11px] tabular-nums text-ink-70">
+        <span className="rounded-full bg-surface-muted px-2.5 py-1 font-mono text-[11px] tabular-nums text-text-muted">
           {String(count).padStart(2, "0")}
         </span>
       )}

@@ -16,7 +16,7 @@ export default async function AppLayout({
   const membership = await requireMembership();
 
   return (
-    <div className="flex min-h-dvh flex-col bg-paper md:flex-row">
+    <div className="flex min-h-dvh flex-col bg-canvas md:flex-row">
       <Sidebar membership={membership} />
       <main className="min-w-0 flex-1">{children}</main>
       <Toaster />

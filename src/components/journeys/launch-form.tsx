@@ -22,7 +22,7 @@ function Submit({ disabled }: { disabled: boolean }) {
     <button
       type="submit"
       disabled={pending || disabled}
-      className="motion-button inline-flex h-9 items-center bg-offset px-5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button primary-action"
     >
       {pending ? "Lancement…" : "Lancer l'onboarding"}
     </button>
@@ -64,17 +64,17 @@ export function LaunchForm({
 
   if (templates.length === 0) {
     return (
-      <div className="motion-rise mt-10 max-w-[560px] border border-ink p-6">
-        <p className="font-serif text-[26px] leading-tight tracking-[-0.01em] text-ink">
+      <div className="motion-rise mt-10 max-w-[560px] rounded-lg border border-line bg-surface p-6">
+        <p className="text-[24px] font-semibold leading-tight tracking-[-0.01em] text-text">
           Aucun parcours type disponible.
         </p>
-        <p className="mt-4 text-[13px] leading-relaxed text-ink-70">
+        <p className="mt-4 text-[13px] leading-relaxed text-text-muted">
           Un onboarding se lance depuis un parcours type actif comportant au
           moins une étape. Créez-en un d&apos;abord.
         </p>
         <Link
           href="/templates/new"
-          className="motion-button mt-6 inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline hover:bg-ink"
+          className="motion-button primary-action mt-6"
         >
           Créer un parcours type
         </Link>
@@ -86,11 +86,11 @@ export function LaunchForm({
     <form action={action} className="motion-rise mt-10">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
         {/* Saisie */}
-        <div className="motion-stagger space-y-5">
+        <div className="motion-stagger rounded-lg border border-line bg-surface p-5">
           <div>
             <label
               htmlFor="templateId"
-              className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+              className="field-label"
             >
               Parcours type
             </label>
@@ -99,7 +99,7 @@ export function LaunchForm({
               name="templateId"
               value={templateId}
               onChange={(e) => setTemplateId(e.target.value)}
-              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+              className="motion-input field-control mt-2"
             >
               {templates.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -112,7 +112,7 @@ export function LaunchForm({
           <div>
             <label
               htmlFor="subjectName"
-              className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+              className="field-label"
             >
               Personne ou client
             </label>
@@ -122,14 +122,14 @@ export function LaunchForm({
               required
               maxLength={120}
               placeholder="Sofia Marchetti"
-              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+              className="motion-input field-control mt-2"
             />
           </div>
 
           <div>
             <label
               htmlFor="subjectEmail"
-              className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+              className="field-label"
             >
               Email (facultatif)
             </label>
@@ -139,14 +139,14 @@ export function LaunchForm({
               type="email"
               maxLength={160}
               placeholder="sofia@exemple.fr"
-              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+              className="motion-input field-control mt-2"
             />
           </div>
 
           <div>
             <label
               htmlFor="startDate"
-              className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+              className="field-label"
             >
               Date d&apos;arrivée
             </label>
@@ -157,14 +157,14 @@ export function LaunchForm({
               required
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
+              className="motion-input field-control mt-2 font-mono tabular-nums"
             />
           </div>
 
           <div>
             <label
               htmlFor="ownerId"
-              className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+              className="field-label"
             >
               Pilote
             </label>
@@ -172,7 +172,7 @@ export function LaunchForm({
               id="ownerId"
               name="ownerId"
               defaultValue={defaultOwnerId}
-              className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+              className="motion-input field-control mt-2"
             >
               {members.map((member) => (
                 <option key={member.id} value={member.id}>
@@ -187,7 +187,7 @@ export function LaunchForm({
             {state?.ok === false && (
               <p
                 role="status"
-                className="font-mono text-[11px] uppercase leading-relaxed tracking-[0.08em] text-correction-text"
+                className="rounded-md bg-overdue-soft px-3 py-2 text-[12px] font-semibold text-overdue"
               >
                 {state.error}
               </p>
@@ -197,33 +197,34 @@ export function LaunchForm({
 
         {/* Aperçu */}
         <div className="motion-rise-delay">
-          <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
-            <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
+          <div className="rounded-lg border border-line bg-surface-raised p-5">
+            <div className="flex items-baseline justify-between border-b border-line pb-3">
+            <h2 className="text-[14px] font-semibold text-text">
               Échéances calculées
             </h2>
-            <span className="font-mono text-[11px] tabular-nums text-ink-70">
+            <span className="rounded-full bg-primary-soft px-2.5 py-1 font-mono text-[11px] tabular-nums text-primary-text">
               {String(preview.length).padStart(2, "0")}
             </span>
           </div>
 
           {preview.length === 0 ? (
-            <p className="py-6 text-[13px] text-ink-70">
+            <p className="py-6 text-[13px] text-text-muted">
               Choisissez une date d&apos;arrivée pour voir les échéances.
             </p>
           ) : (
-            <ul>
+            <ul className="mt-2">
               {preview.map((step) => (
                 <li
                   key={step.position}
-                  className="motion-row grid grid-cols-[24px_1fr_auto] items-center gap-3 border-b border-ink-15 py-2.5"
+                  className="motion-row grid grid-cols-[28px_1fr_auto] items-center gap-3 rounded-md px-2 py-2.5 hover:bg-primary-soft/35"
                 >
-                  <span className="grid h-6 w-6 place-items-center border border-ink-30 font-mono text-[10px] tabular-nums text-ink-45">
+                  <span className="path-node">
                     {String(step.position).padStart(2, "0")}
                   </span>
-                  <span className="min-w-0 truncate text-[13px] text-ink">
+                  <span className="min-w-0 truncate text-[13px] font-medium text-text">
                     {step.title}
                   </span>
-                  <span className="font-mono text-[12px] tabular-nums text-ink-70">
+                  <span className="rounded-full bg-primary-soft px-2.5 py-1 font-mono text-[12px] tabular-nums text-primary-text">
                     {formatShort(step.dueDate)}
                   </span>
                 </li>
@@ -231,11 +232,12 @@ export function LaunchForm({
             </ul>
           )}
 
-          <p className="mt-5 max-w-[52ch] text-[12px] leading-relaxed text-ink-70">
-            Les échéances sont calculées en <strong className="font-semibold text-ink">jours ouvrés</strong> à
+          <p className="mt-5 max-w-[52ch] text-[12px] leading-relaxed text-text-muted">
+            Les échéances sont calculées en <strong className="font-semibold text-text">jours ouvrés</strong> à
             partir de la date d&apos;arrivée. Les étapes du parcours type sont
             copiées : le modifier plus tard ne changera pas cet onboarding.
           </p>
+          </div>
         </div>
       </div>
     </form>

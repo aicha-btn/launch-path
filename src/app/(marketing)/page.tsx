@@ -1,15 +1,20 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Folio } from "@/components/folio";
-import { lateDays } from "@/lib/dates";
-import { TaskRow } from "@/components/journeys/task-row";
-import { Stamp } from "@/components/marks";
+import {
+  DueBadge,
+  JourneyPathPreview,
+  OwnerBadge,
+  PathRail,
+  currentTask,
+  nextTask,
+  overdueCount,
+} from "@/components/path-rail";
 import { JOURNEYS } from "@/mocks/landing-preview";
 
 export const metadata: Metadata = {
   title: "LaunchPath — Des onboardings qui se suivent tout seuls",
   description:
-    "Créez des parcours d'intégration réutilisables, lancez-les en trente secondes, et voyez immédiatement qui est en retard. Pour les équipes RH et Customer Success.",
+    "Transformez vos checklists d'onboarding en parcours orchestrés : checkpoints, owners, échéances et prochaines actions au même endroit.",
 };
 
 /**
@@ -38,7 +43,7 @@ const DEMO = JOURNEYS[2];
 
 function Kicker({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink-70">
+    <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
       {children}
     </p>
   );
@@ -46,7 +51,7 @@ function Kicker({ children }: { children: React.ReactNode }) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mt-4 max-w-[22ch] font-serif text-[32px] leading-[1.05] tracking-[-0.02em] text-ink sm:text-[40px]">
+    <h2 className="mt-4 max-w-[24ch] text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-text sm:text-[44px]">
       {children}
     </h2>
   );
@@ -63,13 +68,13 @@ function Cta({
 }) {
   const styles =
     variant === "primary"
-      ? "bg-offset text-paper hover:bg-ink"
-      : "border border-ink text-ink hover:bg-ink-08";
+      ? "primary-action h-11 px-6"
+      : "secondary-action h-11 px-6";
 
   return (
     <Link
       href={href}
-      className={`motion-button inline-flex h-11 items-center justify-center px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${styles}`}
+      className={`motion-button ${styles}`}
     >
       {children}
     </Link>
@@ -80,97 +85,109 @@ function Cta({
 
 export default function LandingPage() {
   /**
-   * Les tâches réellement EN RETARD, pas « les trois premières à faire ».
-   *
-   * La version précédente prenait `.filter(status === "todo").slice(0, 3)` et
-   * affichait un tampon « Retard 3 tâches » écrit en dur. Ça tombait juste
-   * par coïncidence avec le jeu d'aperçu actuel — mais rien ne le garantissait,
-   * et le tampon aurait menti dès que les données d'exemple auraient changé.
-   * Tout est désormais dérivé.
+   * La landing affiche le même langage que le produit : rail, checkpoints,
+   * owners et échéances, à partir des données d'exemple.
    */
-  const late = DEMO.tasks.filter(
-    (task) => task.status === "todo" && lateDays(task.dueDate) > 0,
-  );
-  const heroTasks = late.slice(0, 3);
+  const current = currentTask(DEMO.tasks);
+  const next = nextTask(DEMO.tasks);
+  const late = overdueCount(DEMO.tasks);
 
   return (
-    <main className="motion-page">
+    <main className="motion-page bg-canvas">
       {/* ============================ HERO ============================ */}
-      <section className="border-b-[3px] border-ink">
+      <section className="border-b border-line bg-canvas">
         <div className="mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-24">
-          <div className="grid gap-14 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-20">
-            <div className="motion-stagger">
-              <Kicker>Onboarding · RH &amp; Customer Success</Kicker>
+          <div className="motion-stagger max-w-[900px]">
+            <Kicker>Système d&apos;orchestration de parcours</Kicker>
 
-              <h1 className="mt-6 font-serif text-[46px] leading-[0.98] tracking-[-0.025em] text-ink sm:text-[68px]">
-                Vos intégrations
-                <br />
-                ne devraient pas vivre
-                <br />
-                dans un tableur.
-              </h1>
+            <h1 className="mt-6 max-w-[13ch] text-[52px] font-semibold leading-[0.98] tracking-[-0.03em] text-text sm:text-[76px]">
+              LaunchPath orchestre vos onboardings.
+            </h1>
 
-              <p className="mt-8 max-w-[52ch] text-[15px] leading-relaxed text-ink-70">
-                LaunchPath transforme vos procédures d&apos;onboarding en
-                parcours réutilisables. Vous les lancez en trente secondes, les
-                échéances se calculent seules à partir de la date d&apos;arrivée,
-                chaque responsable reçoit sa tâche, et les retards remontent
-                sans que personne n&apos;ait à les chercher.
-              </p>
+            <p className="mt-8 max-w-[58ch] text-[16px] leading-relaxed text-text-muted">
+              Transformez une procédure dispersée entre Notion, Excel, Slack et
+              emails en un chemin lisible : checkpoints, owners, échéances,
+              handoffs et prochaine action au même endroit.
+            </p>
 
-              <div className="mt-10 flex flex-wrap items-center gap-3">
-                <Cta href="/dashboard">Voir la démonstration</Cta>
-                <Cta href="/login" variant="secondary">
-                  Créer un compte
-                </Cta>
-              </div>
-
-              <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
-                Démonstration ouverte · Aucune carte bancaire
-              </p>
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <Cta href="/dashboard">Voir la démonstration</Cta>
+              <Cta href="/login" variant="secondary">
+                Créer un compte
+              </Cta>
             </div>
 
-            {/* Le produit se montre lui-même. */}
-            <div className="motion-card motion-rise-delay border border-ink bg-paper">
-              <div className="border-b-[3px] border-ink px-5 py-4">
-                <div className="flex items-baseline justify-between gap-4">
+            <p className="mt-6 text-[13px] font-medium text-text-soft">
+              Démonstration ouverte · Aucune carte bancaire
+            </p>
+          </div>
+
+          <div className="motion-card motion-rise-delay mt-12 rounded-lg border border-line bg-surface-raised p-5">
+            <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70">
-                      Onboarding · {DEMO.templateName}
+                    <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
+                      {DEMO.templateName}
                     </p>
-                    <p className="mt-1.5 truncate font-serif text-[26px] leading-none tracking-[-0.02em] text-ink">
+                    <p className="mt-2 truncate text-[26px] font-semibold leading-none tracking-[-0.01em] text-text">
                       {DEMO.subjectName}
                     </p>
                   </div>
-                  <Stamp tilted>
-                    {`Retard ${late.length} tâche${late.length > 1 ? "s" : ""}`}
-                  </Stamp>
+                  <span className="rounded-full bg-overdue-soft px-3 py-1 text-[12px] font-semibold text-overdue">
+                    {late} checkpoint{late > 1 ? "s" : ""} à rattraper
+                  </span>
                 </div>
 
-                <div className="mt-5">
-                  <Folio tasks={DEMO.tasks} />
+                <div className="mt-6 min-w-0 overflow-hidden rounded-md bg-surface p-4 ring-1 ring-line">
+                  <PathRail tasks={DEMO.tasks} compact />
+                  <div className="mt-5 grid min-w-0 gap-4 sm:grid-cols-2">
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-soft">
+                        Actuel
+                      </p>
+                      <p className="mt-1 truncate text-[14px] font-semibold text-text">
+                        {current?.title ?? "Destination atteinte"}
+                      </p>
+                      {current && (
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <OwnerBadge member={current.assignee} />
+                          <DueBadge task={current} />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-soft">
+                        Suivant
+                      </p>
+                      <p className="mt-1 truncate text-[14px] font-semibold text-text">
+                        {next?.title ?? "Aucun checkpoint suivant"}
+                      </p>
+                      {next && (
+                        <div className="mt-3">
+                          <DueBadge task={next} />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="px-3 py-2">
-                {heroTasks.map((task) => (
-                  <TaskRow key={task.id} task={task} readOnly />
-                ))}
+              <div className="min-w-0 overflow-hidden rounded-md bg-surface p-4 ring-1 ring-line">
+                <JourneyPathPreview tasks={DEMO.tasks} limit={6} />
               </div>
-
-              {/* Formulation exacte : ce ne sont pas des captures, ce sont les
-                  composants réels du produit — mais les données sont inventées.
-                  « Capture réelle » laissait croire à de vraies données client. */}
-              <p className="border-t border-ink-15 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
-                Composants réels · données d&apos;exemple
-              </p>
             </div>
+
+            <p className="mt-5 border-t border-line pt-4 text-[12px] font-medium text-text-soft">
+              Composants produit réels · données d&apos;exemple
+            </p>
           </div>
         </div>
       </section>
 
       {/* ========================== PROBLÈME ========================== */}
-      <section className="border-b-[3px] border-ink">
+      <section className="border-b border-line">
         <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Le problème</Kicker>
           <SectionTitle>
@@ -178,7 +195,7 @@ export default function LandingPage() {
             tard.
           </SectionTitle>
 
-          <div className="motion-stagger mt-12 grid gap-px border border-ink bg-ink sm:grid-cols-3">
+          <div className="motion-stagger mt-12 grid gap-4 sm:grid-cols-3">
             {[
               {
                 figure: "01",
@@ -201,17 +218,17 @@ export default function LandingPage() {
             ].map((item) => (
               <div
                 key={item.figure}
-                className={`motion-card p-6 sm:p-7 ${
-                  item.tone === "signal" ? "bg-signal" : "bg-paper"
+                className={`motion-card rounded-lg border border-line p-6 sm:p-7 ${
+                  item.tone === "signal" ? "bg-warning-soft" : "bg-surface"
                 }`}
               >
-                <span className="font-mono text-[32px] leading-none tabular-nums text-ink">
+                <span className="font-mono text-[28px] leading-none tabular-nums text-primary-text">
                   {item.figure}
                 </span>
-                <h3 className="mt-6 text-[15px] font-semibold text-ink">
+                <h3 className="mt-6 text-[15px] font-semibold text-text">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-[13px] leading-relaxed text-ink-70">
+                <p className="mt-3 text-[13px] leading-relaxed text-text-muted">
                   {item.body}
                 </p>
               </div>
@@ -221,7 +238,7 @@ export default function LandingPage() {
       </section>
 
       {/* ======================== FONCTIONNEMENT ======================= */}
-      <section id="fonctionnement" className="border-b-[3px] border-ink scroll-mt-4">
+      <section id="fonctionnement" className="scroll-mt-4 border-b border-line">
         <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Fonctionnement</Kicker>
           <SectionTitle>Trois gestes, et le suivi se fait tout seul.</SectionTitle>
@@ -246,16 +263,16 @@ export default function LandingPage() {
             ].map((step) => (
               <li
                 key={step.n}
-                className="motion-row grid gap-4 border-t border-ink py-8 sm:grid-cols-[80px_1fr] sm:gap-10"
+                className="motion-row grid gap-4 border-t border-line py-8 sm:grid-cols-[80px_1fr] sm:gap-10"
               >
-                <span className="grid h-12 w-12 place-items-center bg-offset font-mono text-[15px] tabular-nums text-paper">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-primary-soft font-mono text-[15px] font-semibold tabular-nums text-primary-text">
                   {step.n}
                 </span>
                 <div>
-                  <h3 className="font-serif text-[24px] leading-tight tracking-[-0.01em] text-ink">
+                  <h3 className="text-[22px] font-semibold leading-tight tracking-[-0.01em] text-text">
                     {step.title}
                   </h3>
-                  <p className="mt-3 max-w-[62ch] text-[14px] leading-relaxed text-ink-70">
+                  <p className="mt-3 max-w-[62ch] text-[14px] leading-relaxed text-text-muted">
                     {step.body}
                   </p>
                 </div>
@@ -266,12 +283,12 @@ export default function LandingPage() {
       </section>
 
       {/* ======================= FONCTIONNALITÉS ====================== */}
-      <section className="border-b-[3px] border-ink">
+      <section className="border-b border-line">
         <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Ce que ça fait</Kicker>
           <SectionTitle>Le nécessaire, et rien de plus.</SectionTitle>
 
-          <div className="motion-stagger mt-12 grid gap-px border border-ink bg-ink sm:grid-cols-2 lg:grid-cols-3">
+          <div className="motion-stagger mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
               ["Parcours réutilisables", "Un modèle par type d'arrivée : développeur, commercial, nouveau client. Modifiable sans toucher aux intégrations en cours."],
               ["Échéances en jours ouvrés", "Les délais relatifs deviennent des dates réelles. Les week-ends sont exclus, les préparatifs avant l'arrivée sont gérés."],
@@ -280,11 +297,11 @@ export default function LandingPage() {
               ["Relances automatiques", "Un rappel par email la veille de l'échéance, puis chaque jour de retard, sans que personne ne les déclenche."],
               ["Historique complet", "Qui a fait quoi, quand, et ce qui a été commenté. Utile pour améliorer le parcours type."],
             ].map(([title, body]) => (
-              <div key={title} className="motion-card bg-paper p-6">
-                <h3 className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
+              <div key={title} className="motion-card rounded-lg border border-line bg-surface p-6">
+                <h3 className="text-[14px] font-semibold text-text">
                   {title}
                 </h3>
-                <p className="mt-3 text-[13px] leading-relaxed text-ink-70">
+                <p className="mt-3 text-[13px] leading-relaxed text-text-muted">
                   {body}
                 </p>
               </div>
@@ -294,24 +311,24 @@ export default function LandingPage() {
       </section>
 
       {/* ========================= COMPARAISON ======================== */}
-      <section id="comparaison" className="border-b-[3px] border-ink scroll-mt-4">
+      <section id="comparaison" className="scroll-mt-4 border-b border-line">
         <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Comparaison</Kicker>
           <SectionTitle>
             Ce qu&apos;un document partagé ne fera jamais.
           </SectionTitle>
 
-          <div className="mt-12 overflow-x-auto">
+          <div className="mt-12 max-w-full overflow-x-auto rounded-lg border border-line bg-surface">
             <table className="w-full min-w-[640px] border-collapse text-left">
               <thead>
-                <tr className="border-b-[3px] border-ink">
-                  <th className="pb-3 pr-6 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-ink-70">
+                <tr className="border-b border-line">
+                  <th className="pb-3 pr-6 text-[12px] font-semibold uppercase tracking-[0.08em] text-text-soft">
                     Besoin
                   </th>
-                  <th className="pb-3 pr-6 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-ink-70">
+                  <th className="pb-3 pr-6 text-[12px] font-semibold uppercase tracking-[0.08em] text-text-soft">
                     Tableur ou Notion
                   </th>
-                  <th className="bg-offset px-4 pb-3 pt-3 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-paper">
+                  <th className="rounded-t-md bg-primary-soft px-4 pb-3 pt-3 text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
                     LaunchPath
                   </th>
                 </tr>
@@ -324,14 +341,14 @@ export default function LandingPage() {
                   ["Voir toutes les intégrations d'un coup", "Ouvrir chaque document", "Un tableau de bord"],
                   ["Améliorer la procédure pour la suite", "La copie a divergé de l'original", "Le modèle reste la référence"],
                 ].map(([need, before, after]) => (
-                  <tr key={need} className="motion-row border-b border-ink-15">
-                    <td className="py-4 pr-6 text-[14px] font-semibold text-ink">
+                  <tr key={need} className="motion-row border-b border-line">
+                    <td className="py-4 pr-6 text-[14px] font-semibold text-text">
                       {need}
                     </td>
-                    <td className="py-4 pr-6 text-[13px] text-ink-45">
+                    <td className="py-4 pr-6 text-[13px] text-text-soft">
                       {before}
                     </td>
-                    <td className="px-4 py-4 text-[13px] font-semibold text-ink">
+                    <td className="px-4 py-4 text-[13px] font-semibold text-primary-text">
                       {after}
                     </td>
                   </tr>
@@ -343,12 +360,12 @@ export default function LandingPage() {
       </section>
 
       {/* =========================== TARIFS =========================== */}
-      <section id="tarifs" className="border-b-[3px] border-ink scroll-mt-4">
+      <section id="tarifs" className="scroll-mt-4 border-b border-line">
         <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Tarifs</Kicker>
           <SectionTitle>Au nombre de personnes qui suivent, pas qui sont suivies.</SectionTitle>
 
-          <div className="motion-stagger mt-12 grid gap-px border border-ink bg-ink lg:grid-cols-3">
+          <div className="motion-stagger mt-12 grid gap-4 lg:grid-cols-3">
             {[
               {
                 name: "Découverte",
@@ -401,13 +418,15 @@ export default function LandingPage() {
             ].map((plan) => (
               <div
                 key={plan.name}
-                className={`motion-card flex flex-col p-7 ${
-                  plan.highlight ? "bg-offset text-paper" : "bg-paper text-ink"
+                className={`motion-card flex flex-col rounded-lg border border-line p-7 ${
+                  plan.highlight
+                    ? "bg-primary text-surface"
+                    : "bg-surface text-text"
                 }`}
               >
                 <p
-                  className={`font-mono text-[11px] font-medium uppercase tracking-[0.08em] ${
-                    plan.highlight ? "text-paper/70" : "text-ink-70"
+                  className={`text-[12px] font-semibold uppercase tracking-[0.08em] ${
+                    plan.highlight ? "text-surface/80" : "text-text-muted"
                   }`}
                 >
                   {plan.name}
@@ -422,7 +441,7 @@ export default function LandingPage() {
 
                 <p
                   className={`mt-4 text-[13px] leading-relaxed ${
-                    plan.highlight ? "text-paper/70" : "text-ink-70"
+                    plan.highlight ? "text-surface/80" : "text-text-muted"
                   }`}
                 >
                   {plan.detail}
@@ -430,7 +449,7 @@ export default function LandingPage() {
 
                 <ul
                   className={`motion-stagger mt-7 flex-1 space-y-2.5 border-t pt-6 text-[13px] ${
-                    plan.highlight ? "border-paper/25" : "border-ink-15"
+                    plan.highlight ? "border-surface/25" : "border-line"
                   }`}
                 >
                   {plan.features.map((feature) => (
@@ -445,10 +464,10 @@ export default function LandingPage() {
 
                 <Link
                   href={plan.href}
-                  className={`motion-button mt-8 inline-flex h-11 items-center justify-center px-5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
+                  className={`motion-button mt-8 h-11 px-5 ${
                     plan.highlight
-                      ? "bg-paper text-offset hover:bg-signal hover:text-ink"
-                      : "bg-ink text-paper hover:bg-offset"
+                      ? "secondary-action bg-surface text-primary-text hover:bg-primary-soft"
+                      : "primary-action"
                   }`}
                 >
                   {plan.cta}
@@ -460,7 +479,7 @@ export default function LandingPage() {
       </section>
 
       {/* ========================== QUESTIONS ========================= */}
-      <section id="questions" className="border-b-[3px] border-ink scroll-mt-4">
+      <section id="questions" className="scroll-mt-4 border-b border-line">
         <div className="motion-rise mx-auto max-w-[1280px] px-6 py-16 sm:px-10 sm:py-20">
           <Kicker>Questions</Kicker>
           <SectionTitle>Ce qu&apos;on nous demande le plus.</SectionTitle>
@@ -488,11 +507,11 @@ export default function LandingPage() {
                 "Oui. Chaque requête est filtrée par organisation côté serveur, et la base refuse tout accès direct depuis l'extérieur.",
               ],
             ].map(([question, answer]) => (
-              <div key={question} className="motion-row border-t border-ink py-7">
-                <dt className="text-[15px] font-semibold text-ink">
+              <div key={question} className="motion-row border-t border-line py-7">
+                <dt className="text-[15px] font-semibold text-text">
                   {question}
                 </dt>
-                <dd className="mt-3 text-[13px] leading-relaxed text-ink-70">
+                <dd className="mt-3 text-[13px] leading-relaxed text-text-muted">
                   {answer}
                 </dd>
               </div>
@@ -502,13 +521,13 @@ export default function LandingPage() {
       </section>
 
       {/* ========================= CTA FINAL ========================== */}
-      <section className="bg-offset text-paper">
+      <section className="bg-primary text-surface">
         <div className="motion-rise mx-auto max-w-[1280px] px-6 py-20 sm:px-10 sm:py-24">
           <div className="max-w-[26ch]">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper/70">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-surface/75">
               Prêt à essayer
             </p>
-            <p className="mt-5 font-serif text-[40px] leading-[1.02] tracking-[-0.02em] sm:text-[56px]">
+            <p className="mt-5 text-[40px] font-semibold leading-[1.02] tracking-[-0.03em] sm:text-[56px]">
               La prochaine arrivée est déjà dans deux semaines.
             </p>
           </div>
@@ -516,13 +535,13 @@ export default function LandingPage() {
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <Link
               href="/dashboard"
-              className="motion-button inline-flex h-11 items-center bg-paper px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-offset no-underline transition-colors duration-[120ms] hover:bg-signal hover:text-ink"
+              className="motion-button inline-flex h-11 items-center rounded-full bg-surface px-6 text-[13px] font-semibold text-primary-text no-underline transition-colors duration-[120ms] hover:bg-primary-soft"
             >
               Voir la démonstration
             </Link>
             <Link
               href="/login"
-              className="motion-button inline-flex h-11 items-center border border-paper px-6 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper no-underline transition-colors duration-[120ms] hover:bg-paper hover:text-offset"
+              className="motion-button inline-flex h-11 items-center rounded-full border border-surface/60 px-6 text-[13px] font-semibold text-surface no-underline transition-colors duration-[120ms] hover:bg-surface hover:text-primary-text"
             >
               Créer un compte
             </Link>

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-/* Trois familles, trois rôles exclusifs — voir docs/design-system.md § 4.
+/* Typographie LaunchPath — voir docs/design-system.md § 3.
    Archivo : toute l'interface.
-   Instrument Serif : titres d'affichage uniquement, jamais sous 28 px.
+   Instrument Serif : accent d'affichage exceptionnel.
    IBM Plex Mono : libellés, dates, compteurs, identifiants. */
 
 const archivo = Archivo({

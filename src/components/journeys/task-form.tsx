@@ -13,7 +13,7 @@ function Submit({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button primary-action"
     >
       {pending ? "…" : label}
     </button>
@@ -43,7 +43,7 @@ export function TaskEditForm({
       <div>
         <label
           htmlFor="assigneeId"
-          className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+          className="field-label"
         >
           Responsable
         </label>
@@ -51,7 +51,7 @@ export function TaskEditForm({
           id="assigneeId"
           name="assigneeId"
           defaultValue={task.assignee?.id ?? ""}
-          className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+          className="motion-input field-control mt-2"
         >
           <option value="">Non assignée</option>
           {members.map((member) => (
@@ -65,7 +65,7 @@ export function TaskEditForm({
       <div>
         <label
           htmlFor="dueDate"
-          className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+          className="field-label"
         >
           Échéance
         </label>
@@ -75,7 +75,7 @@ export function TaskEditForm({
           type="date"
           required
           defaultValue={task.dueDate}
-          className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
+          className="motion-input field-control mt-2 font-mono tabular-nums"
         />
       </div>
 
@@ -107,7 +107,7 @@ export function CommentForm({ taskId }: { taskId: string }) {
         rows={3}
         maxLength={2000}
         placeholder="Ce qui bloque, ce qui a été fait, une précision utile…"
-        className="motion-input w-full border border-ink-30 bg-paper px-3 py-2 text-[13px] leading-relaxed text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+        className="motion-input field-control w-full"
       />
       <div className="mt-3">
         <Submit label="Commenter" />

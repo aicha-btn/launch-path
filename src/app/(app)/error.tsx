@@ -34,7 +34,7 @@ export default function AppError({
               <button
                 type="button"
                 onClick={reset}
-                className="motion-button inline-flex h-9 items-center justify-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
+                className="motion-button primary-action"
               >
                 Réessayer
               </button>
@@ -47,7 +47,7 @@ export default function AppError({
           L&apos;erreur a été enregistrée. Si elle se reproduit, réessayez dans
           quelques instants.
           {error.digest && (
-            <span className="mt-4 block font-mono text-[11px] uppercase tracking-[0.08em] text-ink-30">
+            <span className="mt-4 block text-action text-text-soft">
               Référence {error.digest}
             </span>
           )}

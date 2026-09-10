@@ -35,7 +35,7 @@ function SavePending({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="motion-button h-9 shrink-0 border border-ink px-3 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08 disabled:text-ink-30"
+      className="motion-button secondary-action h-9 shrink-0 px-3 text-[12px]"
     >
       {pending ? "…" : label}
     </button>
@@ -63,9 +63,9 @@ function StepRow({
   useToastFeedback(state);
 
   return (
-    <li className="motion-row border-b border-ink-15 py-4">
+    <li className="motion-row rounded-md py-4">
       <div className="flex items-start gap-3">
-        <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center border border-ink-30 font-mono text-[10px] tabular-nums text-ink-45">
+        <span className="path-node mt-1 shrink-0">
           {String(step.position).padStart(2, "0")}
         </span>
 
@@ -78,29 +78,29 @@ function StepRow({
               name="title"
               defaultValue={step.title}
               maxLength={160}
-              className="motion-input h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none"
+              className="motion-input field-control h-9"
             />
 
             <div>
-              <label className="block font-mono text-[9px] uppercase tracking-[0.08em] text-ink-45">
+              <label className="field-label">
                 Délai (j)
               </label>
               <input
                 name="offsetDays"
                 defaultValue={String(step.offsetDays)}
                 inputMode="numeric"
-                className="motion-input h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
+                className="motion-input field-control h-9 font-mono tabular-nums"
               />
             </div>
 
             <div>
-              <label className="block font-mono text-[9px] uppercase tracking-[0.08em] text-ink-45">
+              <label className="field-label">
                 Responsable
               </label>
               <select
                 name="assigneeId"
                 defaultValue={step.defaultAssignee?.id ?? ""}
-                className="motion-input h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none"
+                className="motion-input field-control h-9"
               >
                 <option value="">Non assignée</option>
                 {members.map((member) => (
@@ -114,7 +114,7 @@ function StepRow({
             <SavePending label="Enregistrer" />
           </div>
 
-          <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
+          <p className="mt-2 text-action">
             {offsetLabel(step.offsetDays)}
           </p>
         </form>
@@ -131,7 +131,7 @@ function StepRow({
                 type="submit"
                 disabled={isFirst}
                 aria-label={`Monter l'étape ${step.position}`}
-                className="motion-button grid h-7 w-7 place-items-center border border-ink-30 font-mono text-[11px] text-ink transition-colors duration-[120ms] hover:bg-ink-08 disabled:border-ink-15 disabled:text-ink-15"
+                className="motion-button grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-[13px] font-semibold text-text-muted transition-colors duration-[120ms] hover:border-primary hover:text-primary-text disabled:border-line disabled:text-line-strong"
               >
                 ↑
               </button>
@@ -144,7 +144,7 @@ function StepRow({
                 type="submit"
                 disabled={isLast}
                 aria-label={`Descendre l'étape ${step.position}`}
-                className="motion-button grid h-7 w-7 place-items-center border border-ink-30 font-mono text-[11px] text-ink transition-colors duration-[120ms] hover:bg-ink-08 disabled:border-ink-15 disabled:text-ink-15"
+                className="motion-button grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-[13px] font-semibold text-text-muted transition-colors duration-[120ms] hover:border-primary hover:text-primary-text disabled:border-line disabled:text-line-strong"
               >
                 ↓
               </button>
@@ -157,7 +157,7 @@ function StepRow({
             <button
               type="submit"
               aria-label={`Supprimer l'étape ${step.position}`}
-              className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text"
+              className="motion-link text-action"
             >
               Supprimer
             </button>
@@ -197,7 +197,7 @@ function AddStepForm({
       <input type="hidden" name="templateId" value={templateId} />
       <div className="motion-stagger grid gap-3 sm:grid-cols-[1fr_96px_150px_auto] sm:items-end">
         <div>
-          <label className="block font-mono text-[9px] uppercase tracking-[0.08em] text-ink-45">
+          <label className="field-label">
             Nouvelle étape
           </label>
           <input
@@ -205,28 +205,28 @@ function AddStepForm({
             required
             maxLength={160}
             placeholder="Point de fin de première semaine"
-            className="motion-input h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+            className="motion-input field-control h-9"
           />
         </div>
         <div>
-          <label className="block font-mono text-[9px] uppercase tracking-[0.08em] text-ink-45">
+          <label className="field-label">
             Délai (j)
           </label>
           <input
             name="offsetDays"
             defaultValue="0"
             inputMode="numeric"
-            className="motion-input h-9 w-full border border-ink-30 bg-paper px-3 font-mono text-[13px] tabular-nums text-ink focus:border-ink focus:outline-none"
+            className="motion-input field-control h-9 font-mono tabular-nums"
           />
         </div>
         <div>
-          <label className="block font-mono text-[9px] uppercase tracking-[0.08em] text-ink-45">
+          <label className="field-label">
             Responsable
           </label>
           <select
             name="assigneeId"
             defaultValue=""
-            className="motion-input h-9 w-full border border-ink-30 bg-paper px-2 text-[13px] text-ink focus:border-ink focus:outline-none"
+            className="motion-input field-control h-9"
           >
             <option value="">Non assignée</option>
             {members.map((member) => (
@@ -269,7 +269,7 @@ export function StepEditor({
       </ul>
 
       {steps.length === 0 && (
-        <p className="motion-rise border-b border-ink-15 py-6 text-[13px] text-ink-70">
+        <p className="motion-rise border-b border-line py-6 text-[13px] text-text-muted">
           Ce parcours type n&apos;a plus aucune étape. Il ne pourra pas être
           lancé tant qu&apos;il en manque.
         </p>

@@ -7,11 +7,7 @@ import { signOut } from "@/server/actions/auth";
 import type { CurrentMembership } from "@/server/auth/session";
 
 /**
- * Bloc d'encre directe — § 8. La sidebar ne suit pas le thème : c'est une
- * surface imprimée en bleu offset dans les deux modes.
- *
- * Responsive (§ 6) : barre horizontale en dessous de `md`, colonne fixe
- * au-dessus.
+ * Navigation de workspace : surface calme, marqueur de path sur la vue active.
  */
 
 const NAV = [
@@ -43,12 +39,15 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
   return (
     <>
       {/* Colonne fixe — desktop */}
-      <aside className="motion-rise hidden w-[260px] shrink-0 flex-col bg-offset text-paper md:flex">
-        <div className="px-6 pb-8 pt-6">
-          <Link href="/dashboard" className="motion-link no-underline">
+      <aside className="motion-rise hidden w-[280px] shrink-0 flex-col border-r border-line bg-sidebar text-text md:flex">
+        <div className="px-6 pb-7 pt-6">
+          <Link href="/dashboard" className="motion-link inline-block no-underline text-primary-text">
             <Logo />
           </Link>
-          <p className="mt-3 truncate font-mono text-[10px] uppercase tracking-[0.08em] text-paper/60">
+          <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-text-soft">
+            Workspace
+          </p>
+          <p className="mt-1 truncate text-[14px] font-semibold text-text">
             {membership.organizationName}
           </p>
         </div>
@@ -58,20 +57,24 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);
               return (
-                <li key={item.href} className="relative">
-                  {active && (
-                    <span
-                      aria-hidden
-                      className="motion-rule absolute inset-y-0 left-0 w-[3px] bg-paper"
-                    />
-                  )}
+                <li key={item.href} className="px-3">
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`motion-link block px-6 py-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline transition-colors duration-[120ms] ${
-                      active ? "text-paper" : "text-paper/60 hover:text-paper"
+                    className={`motion-link flex items-center gap-3 rounded-md px-3 py-2.5 text-[14px] font-medium no-underline transition-colors duration-[120ms] ${
+                      active
+                        ? "bg-surface text-primary-text ring-1 ring-primary-soft"
+                        : "text-text-muted hover:bg-surface/70 hover:text-text"
                     }`}
                   >
+                    <span
+                      aria-hidden
+                      className={`h-2.5 w-2.5 rounded-full border-2 ${
+                        active
+                          ? "border-primary bg-primary"
+                          : "border-line-strong bg-transparent"
+                      }`}
+                    />
                     {item.label}
                   </Link>
                 </li>
@@ -80,24 +83,24 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
           </ul>
         </nav>
 
-        <div className="border-t border-paper/20 px-6 py-5">
+        <div className="border-t border-line px-6 py-5">
           <div className="flex items-center gap-3">
-            <span className="motion-avatar grid h-6 w-6 shrink-0 place-items-center bg-paper font-mono text-[10px] text-offset">
+            <span className="motion-avatar grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-semibold text-surface">
               {initials}
             </span>
-            <span className="min-w-0 flex-1 truncate text-[12px]">
+            <span className="min-w-0 flex-1 truncate text-[12px] text-text-muted">
               {membership.email}
             </span>
           </div>
 
           <div className="mt-3 flex items-center gap-3">
-            <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-paper/50">
+            <span className="text-[11px] font-medium text-text-soft">
               {membership.role === "admin" ? "Administrateur" : "Membre"}
             </span>
             <form action={signOut} className="ml-auto">
               <button
                 type="submit"
-                className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-paper/60 underline transition-colors duration-[120ms] hover:text-paper"
+                className="motion-link text-[12px] font-semibold text-text-soft underline transition-colors duration-[120ms] hover:text-primary-text"
               >
                 Quitter
               </button>
@@ -107,26 +110,26 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
       </aside>
 
       {/* Barre horizontale — mobile */}
-      <div className="motion-rise bg-offset text-paper md:hidden">
+      <div className="motion-rise border-b border-line bg-sidebar text-text md:hidden">
         <div className="flex items-center justify-between gap-4 px-6 py-4">
-          <Link href="/dashboard" className="motion-link no-underline">
+          <Link href="/dashboard" className="motion-link no-underline text-primary-text">
             <Logo />
           </Link>
           <div className="flex items-center gap-3">
-            <span className="motion-avatar grid h-6 w-6 place-items-center bg-paper font-mono text-[10px] text-offset">
+            <span className="motion-avatar grid h-7 w-7 place-items-center rounded-full bg-primary text-[11px] font-semibold text-surface">
               {initials}
             </span>
             <form action={signOut}>
               <button
                 type="submit"
-                className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-paper/60 underline"
+                className="motion-link text-[12px] font-semibold text-text-soft underline"
               >
                 Quitter
               </button>
             </form>
           </div>
         </div>
-        <nav className="overflow-x-auto border-t border-paper/20">
+        <nav className="overflow-x-auto border-t border-line">
           <ul className="flex">
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);
@@ -135,8 +138,10 @@ export function Sidebar({ membership }: { membership: CurrentMembership }) {
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`motion-link block whitespace-nowrap px-4 py-3 font-mono text-[11px] font-medium uppercase tracking-[0.08em] no-underline ${
-                      active ? "bg-paper text-offset" : "text-paper/60"
+                    className={`motion-link block whitespace-nowrap px-4 py-3 text-[13px] font-semibold no-underline ${
+                      active
+                        ? "bg-surface text-primary-text"
+                        : "text-text-muted"
                     }`}
                   >
                     {item.label}

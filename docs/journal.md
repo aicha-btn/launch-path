@@ -5,6 +5,28 @@ rencontrées » du README et servira de base aux réponses d'entretien.
 
 ---
 
+## 2026-09-10 — Refonte DA : Journey Orchestration System
+
+**Fait**
+
+- Audit complet des routes et composants visuels.
+- Remplacement de la direction "brutalisme éditorial" par une DA métier :
+  rails de parcours, checkpoints, owners, due badges et prochaine action.
+- Refonte des écrans clés : landing, dashboard, liste d'onboardings, détail,
+  templates, auth, invitation, équipe et états vides.
+- Ajout des primitives `PathRail`, `JourneyPathPreview`, `JourneyCard`,
+  `DueBadge`, `OwnerBadge` et des classes globales de formulaire/action.
+- Correction responsive du hero et du tableau de comparaison à 390 px.
+
+**Appris**
+
+Une animation séduisante ne suffit pas si la structure visuelle raconte encore
+un autre produit. Ici, le changement important n'était pas "plus de mouvement",
+mais de faire porter chaque écran par la même question : où en est le parcours,
+qui doit agir, et quand ?
+
+---
+
 ## 2026-08-09 — Un bug trouvé en trente secondes par un utilisateur
 
 **Le symptôme** : `/journeys/j-clara` affichait un squelette de chargement

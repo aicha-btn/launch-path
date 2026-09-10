@@ -2,11 +2,20 @@ import { notFound } from "next/navigation";
 import { Masthead } from "@/components/masthead";
 import { Folio } from "@/components/folio";
 import { JourneyStatusLabel, SectionRule, Stamp } from "@/components/marks";
+import {
+  DueBadge,
+  JourneyPathPreview,
+  OwnerBadge,
+  completedCount,
+  currentTask,
+  nextTask,
+  overdueCount,
+} from "@/components/path-rail";
 import { ActivityTimeline } from "@/components/journeys/activity-timeline";
 import { TaskRow } from "@/components/journeys/task-row";
 import { TaskSheet } from "@/components/journeys/task-sheet";
-import { Avatar, Button } from "@/components/ui";
-import { daysBetween, formatShort, lateDays } from "@/lib/dates";
+import { Button } from "@/components/ui";
+import { daysBetween, formatShort } from "@/lib/dates";
 import { cancelJourney, reopenJourney } from "@/server/actions/journeys";
 import { requireMembership } from "@/server/auth/session";
 import { getJourney } from "@/server/db/queries/journeys";
@@ -68,10 +77,10 @@ export default async function JourneyDetailPage({
     : null;
   const openDetail = detail && detail.journeyId === journey.id ? detail : null;
 
-  const done = journey.tasks.filter((t) => t.status !== "todo").length;
-  const late = journey.tasks.filter(
-    (t) => t.status === "todo" && lateDays(t.dueDate) > 0,
-  ).length;
+  const done = completedCount(journey.tasks);
+  const late = overdueCount(journey.tasks);
+  const current = currentTask(journey.tasks);
+  const next = nextTask(journey.tasks);
 
   return (
     <>
@@ -89,7 +98,7 @@ export default async function JourneyDetailPage({
               <input type="hidden" name="journeyId" value={journey.id} />
               <button
                 type="submit"
-                className="motion-button inline-flex h-9 items-center bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink"
+                className="motion-button primary-action"
               >
                 Réactiver
               </button>
@@ -103,7 +112,7 @@ export default async function JourneyDetailPage({
                 <input type="hidden" name="journeyId" value={journey.id} />
                 <button
                   type="submit"
-                  className="motion-button inline-flex h-9 items-center border border-ink px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-ink-08"
+                  className="motion-button secondary-action"
                 >
                   Annuler
                 </button>
@@ -113,46 +122,125 @@ export default async function JourneyDetailPage({
         }
       />
 
-      <div className="motion-page px-6 py-10 sm:px-10">
-        {/* Le tampon incliné : une seule fois par page, ici. */}
-        <div className="motion-stagger flex flex-wrap items-center gap-4">
-          <JourneyStatusLabel status={journey.status} />
-          {late > 0 && (
-            <Stamp tilted>{`Retard ${late} tâche${late > 1 ? "s" : ""}`}</Stamp>
-          )}
-          <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70">
-            <Avatar member={journey.owner} /> {journey.owner.name}
-          </span>
-        </div>
+      <div className="motion-page mx-auto grid max-w-[1180px] gap-8 px-6 py-8 sm:px-10 xl:grid-cols-[minmax(0,1fr)_330px]">
+        <section className="min-w-0">
+          <div className="motion-card rounded-lg border border-line bg-surface-raised p-5">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
+                  Trajectoire
+                </p>
+                <p className="mt-2 max-w-[54ch] text-[13px] leading-relaxed text-text-muted">
+                  Le parcours montre les checkpoints déjà franchis, la position
+                  actuelle, et les étapes qui demandent une intervention.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <JourneyStatusLabel status={journey.status} />
+                {late > 0 && (
+                  <Stamp>{`${late} checkpoint${late > 1 ? "s" : ""} en retard`}</Stamp>
+                )}
+              </div>
+            </div>
 
-        {/* Le composant héros : la progression en folios numérotés. */}
-        <div className="mt-8">
-          <Folio tasks={journey.tasks} />
-        </div>
+            <div className="mt-6">
+              <Folio tasks={journey.tasks} />
+            </div>
+          </div>
 
-        <div className="motion-stagger mt-14 space-y-12">
-          {groupByWeek(journey.tasks, journey.startDate).map(([week, tasks]) => (
-            <section key={week}>
-              <SectionRule count={tasks.length}>{weekLabel(week)}</SectionRule>
-              <ul>
-                {tasks.map((task) => (
-                  <li key={task.id}>
-                    <TaskRow
-                      task={task}
-                      titleHref={`/journeys/${journey.id}?task=${task.id}`}
-                      showSkip
-                    />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
+          <div className="motion-stagger mt-8 space-y-8">
+            {groupByWeek(journey.tasks, journey.startDate).map(([week, tasks]) => (
+              <section key={week}>
+                <SectionRule count={tasks.length}>{weekLabel(week)}</SectionRule>
+                <ul className="mt-3 space-y-2">
+                  {tasks.map((task) => (
+                    <li key={task.id}>
+                      <TaskRow
+                        task={task}
+                        titleHref={`/journeys/${journey.id}?task=${task.id}`}
+                        showSkip
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
 
-        <section className="mt-14">
-          <SectionRule count={activity.length}>Historique</SectionRule>
-          <ActivityTimeline entries={activity} />
+          <section className="mt-10">
+            <SectionRule count={activity.length}>Historique</SectionRule>
+            <ActivityTimeline entries={activity} />
+          </section>
         </section>
+
+        <aside className="motion-rise h-fit rounded-lg border border-line bg-surface p-5 xl:sticky xl:top-6">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
+            Position actuelle
+          </p>
+
+          <div className="mt-4 space-y-5">
+            <div>
+              <p className="text-[13px] font-medium text-text-muted">
+                Checkpoint actuel
+              </p>
+              <p className="mt-1 text-[18px] font-semibold leading-tight text-text">
+                {current?.title ?? "Destination atteinte"}
+              </p>
+              {current && (
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <OwnerBadge member={current.assignee} />
+                  <DueBadge task={current} />
+                </div>
+              )}
+            </div>
+
+            <div className="border-t border-line pt-5">
+              <p className="text-[13px] font-medium text-text-muted">
+                Checkpoint suivant
+              </p>
+              <p className="mt-1 text-[14px] font-semibold text-text">
+                {next?.title ?? "Aucun checkpoint suivant"}
+              </p>
+              {next && (
+                <div className="mt-3">
+                  <DueBadge task={next} />
+                </div>
+              )}
+            </div>
+
+            <div className="border-t border-line pt-5">
+              <p className="text-[13px] font-medium text-text-muted">
+                Pilote du parcours
+              </p>
+              <div className="mt-2">
+                <OwnerBadge member={journey.owner} />
+              </div>
+            </div>
+
+            <dl className="grid grid-cols-2 gap-3 border-t border-line pt-5">
+              <div className="rounded-md bg-success-soft p-3 text-success">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.08em]">
+                  Fait
+                </dt>
+                <dd className="mt-2 font-mono text-[22px] tabular-nums">
+                  {done}/{journey.tasks.length}
+                </dd>
+              </div>
+              <div className="rounded-md bg-overdue-soft p-3 text-overdue">
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.08em]">
+                  Risque
+                </dt>
+                <dd className="mt-2 font-mono text-[22px] tabular-nums">
+                  {late}
+                </dd>
+              </div>
+            </dl>
+
+            <div className="border-t border-line pt-5">
+              <JourneyPathPreview tasks={journey.tasks} limit={5} />
+            </div>
+          </div>
+        </aside>
       </div>
 
       {openDetail && (

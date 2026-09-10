@@ -1,70 +1,130 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   LaunchPath — Design System : brutalisme éditorial
-   Référence : docs/design-system.md
-   Trois couleurs. Zéro arrondi. Zéro ombre. Le rouge ne dit que le retard.
+   LaunchPath — Journey Orchestration System
+   La direction artistique part du métier : parcours, checkpoints, owners,
+   échéances et progression lisible.
    ========================================================================== */
 
 :root {
-  /* — Fondations : quatre encres, un rôle exclusif chacune — */
-  --paper: #f8f7f4;
-  --ink: #111110; /* texte, filets */
-  --ink-70: #4e4d4a;
-  --ink-45: #8b8a86;
-  --ink-30: #abaaa6;
-  --ink-15: #d3d2ce;
-  --ink-08: #e6e5e1;
-  --offset: #2242d8; /* identité, structure, action */
-  --offset-text: #1b35ab;
-  --signal: #ffdd00; /* emphase — aplat uniquement, jamais du texte */
-  --correction: #d8231a; /* retard, et rien d'autre */
-  --correction-text: #b81c10;
+  --canvas: #f7f3ea;
+  --surface: #fffaf1;
+  --surface-raised: #fffdf7;
+  --surface-muted: #ece6db;
+  --sidebar: #eeedf8;
+  --text: #25231f;
+  --text-muted: #69645b;
+  --text-soft: #948d82;
+  --line: #d7cec0;
+  --line-strong: #b7ac9e;
+  --primary: #5667e8;
+  --primary-text: #3f4dcc;
+  --primary-soft: #e4e7ff;
+  --path-accent: #8b83ff;
+  --path-accent-soft: #eeecff;
+  --success: #5f8d70;
+  --success-soft: #e5efe7;
+  --warning: #d99a2b;
+  --warning-soft: #fff0cf;
+  --overdue: #c85f45;
+  --overdue-soft: #f8dfd7;
+  --blocked: #51465e;
+  --blocked-soft: #e7e0eb;
+
+  /* Compatibilite progressive avec les anciens noms Tailwind du projet. */
+  --paper: var(--canvas);
+  --ink: var(--text);
+  --ink-70: var(--text-muted);
+  --ink-45: var(--text-soft);
+  --ink-30: var(--line-strong);
+  --ink-15: var(--line);
+  --ink-08: var(--surface-muted);
+  --offset: var(--primary);
+  --offset-text: var(--primary-text);
+  --signal: var(--warning-soft);
+  --correction: var(--overdue);
+  --correction-text: var(--overdue);
+
+  --lp-radius-xs: 6px;
+  --lp-radius-sm: 10px;
+  --lp-radius-md: 16px;
+  --lp-radius-lg: 22px;
+  --shadow-active: 0 16px 40px rgb(86 103 232 / 0.12);
 
   /* — Correspondance shadcn/ui : redéfinir ces noms suffit à faire
        basculer tous ses composants dans le système — */
-  --background: var(--paper);
-  --foreground: var(--ink);
-  --card: var(--paper);
-  --card-foreground: var(--ink);
-  --popover: var(--paper);
-  --popover-foreground: var(--ink);
-  --primary: var(--ink);
-  --primary-foreground: var(--paper);
-  --secondary: var(--offset);
-  --secondary-foreground: var(--paper);
-  --muted: var(--ink-08);
-  --muted-foreground: var(--ink-70);
-  --accent: var(--ink-08);
-  --accent-foreground: var(--ink);
-  --destructive: var(--correction);
-  --destructive-foreground: var(--paper);
-  --border: var(--ink-15);
-  --input: var(--ink-30);
-  --ring: var(--ink);
-
-  /* La règle identitaire, en une ligne */
-  --radius: 0px;
+  --background: var(--canvas);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface-raised);
+  --popover-foreground: var(--text);
+  --primary-foreground: var(--surface);
+  --secondary: var(--path-accent);
+  --secondary-foreground: var(--surface);
+  --muted: var(--surface-muted);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--primary-soft);
+  --accent-foreground: var(--primary-text);
+  --destructive: var(--overdue);
+  --destructive-foreground: var(--surface);
+  --border: var(--line);
+  --input: var(--line-strong);
+  --ring: var(--primary);
+  --radius: var(--lp-radius-sm);
 }
 
-/* Le thème sombre est un négatif : même papier, même encres, inversés.
-   Les encres directes s'éclaircissent pour tenir leur contraste. */
 .dark {
-  --paper: #111110;
-  --ink: #f8f7f4;
-  --ink-70: #b4b3af;
-  --ink-45: #7c7b78;
-  --ink-30: #565553;
-  --ink-15: #33322f;
-  --ink-08: #232220;
-  --offset: #5b79ff;
-  --offset-text: #8fa3ff;
-  --signal: #ffdd00;
-  --correction: #ff4436;
-  --correction-text: #ff6b5f;
+  --canvas: #151410;
+  --surface: #201f1a;
+  --surface-raised: #28261f;
+  --surface-muted: #302d25;
+  --sidebar: #25243a;
+  --text: #f7f3ea;
+  --text-muted: #cbc4b8;
+  --text-soft: #9c958a;
+  --line: #3f3a31;
+  --line-strong: #5d5548;
+  --primary: #8795ff;
+  --primary-text: #bac2ff;
+  --primary-soft: #2d315a;
+  --path-accent: #b5aeff;
+  --path-accent-soft: #383252;
+  --success: #8fbd9c;
+  --success-soft: #253629;
+  --warning: #f3bb5b;
+  --warning-soft: #4a3820;
+  --overdue: #ff8b71;
+  --overdue-soft: #4b2d27;
+  --blocked: #c7b4d7;
+  --blocked-soft: #342b3d;
 }
 
 @theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-muted: var(--surface-muted);
+  --color-sidebar: var(--sidebar);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-soft: var(--text-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
+  --color-primary-soft: var(--primary-soft);
+  --color-path-accent: var(--path-accent);
+  --color-path-accent-soft: var(--path-accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-overdue: var(--overdue);
+  --color-overdue-soft: var(--overdue-soft);
+  --color-blocked: var(--blocked);
+  --color-blocked-soft: var(--blocked-soft);
+
   --color-paper: var(--paper);
   --color-ink: var(--ink);
   --color-ink-70: var(--ink-70);
@@ -83,26 +143,26 @@
   --color-border: var(--border);
   --color-ring: var(--ring);
 
-  /* Trois familles, trois rôles exclusifs */
+  /* Archivo porte le produit ; la serif reste disponible pour de rares accents. */
   --font-sans: var(--font-archivo);
   --font-serif: var(--font-instrument-serif);
   --font-mono: var(--font-plex-mono);
 
-  --radius-none: 0px;
+  --radius-xs: var(--lp-radius-xs);
+  --radius-sm: var(--lp-radius-sm);
+  --radius-md: var(--lp-radius-md);
+  --radius-lg: var(--lp-radius-lg);
+  --radius-none: 0;
 }
 
 @layer base {
-  /* Garde-fou pour la durée du projet : empêche mécaniquement tout
-     composant shadcn installé plus tard de réintroduire un arrondi ou
-     une ombre. À remplacer par une configuration propre à la phase 12. */
   * {
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    box-sizing: border-box;
   }
 
   body {
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--canvas);
+    color: var(--text);
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     font-size: 14px;
     line-height: 1.55;
@@ -119,28 +179,131 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Les liens sont soulignés en encre, jamais colorés. */
   a {
+    color: inherit;
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 1px;
   }
 
-  /* Contour net, aucune lueur, aucun halo coloré. */
   :focus-visible {
-    outline: 2px solid var(--ink);
+    outline: 2px solid var(--primary);
     outline-offset: 2px;
   }
 
   ::selection {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--primary);
+    color: var(--surface);
   }
 }
 
-/* Filet double : signature éditoriale, un seul par page, tout en haut. */
+@layer components {
+  .field-label {
+    color: var(--text-muted);
+    display: block;
+    font-family: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .field-control {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--lp-radius-sm);
+    color: var(--text);
+    font-size: 14px;
+    height: 40px;
+    padding-inline: 12px;
+    width: 100%;
+  }
+
+  textarea.field-control {
+    height: auto;
+    line-height: 1.55;
+    padding-block: 10px;
+  }
+
+  .field-control::placeholder {
+    color: var(--text-soft);
+  }
+
+  .field-control:focus,
+  .field-control:focus-visible {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
+    outline: none;
+  }
+
+  .primary-action,
+  .secondary-action {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 13px;
+    font-weight: 700;
+    height: 40px;
+    justify-content: center;
+    padding-inline: 16px;
+    text-decoration: none;
+  }
+
+  .primary-action {
+    background: var(--primary);
+    color: var(--surface);
+  }
+
+  .primary-action:hover {
+    background: var(--primary-text);
+  }
+
+  .secondary-action {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+  }
+
+  .secondary-action:hover {
+    border-color: var(--primary);
+    color: var(--primary-text);
+  }
+
+  .primary-action:disabled,
+  .secondary-action:disabled {
+    opacity: 0.45;
+  }
+
+  .text-action {
+    color: var(--text-soft);
+    font-family: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .text-action:hover {
+    color: var(--overdue);
+  }
+
+  .path-node {
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--text-soft);
+    display: grid;
+    font-family: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    height: 28px;
+    justify-items: center;
+    width: 28px;
+  }
+}
+
 .rule-double {
-  border-top: 3px solid var(--ink);
+  border-top: 1px solid var(--line);
   position: relative;
 }
 .rule-double::after {
@@ -148,10 +311,10 @@
   position: absolute;
   inset-inline: 0;
   top: 6px;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--primary-soft);
 }
 
-/* Motion system : reveal editorial, micro-interactions nettes, zéro flou. */
+/* Motion system : la progression se pose, les checkpoints répondent. */
 @keyframes lp-rise-in {
   from {
     opacity: 0;
@@ -251,12 +414,18 @@
     overflow: hidden;
     position: relative;
     transition-duration: 160ms;
-    transition-property: background-color, border-color, color, opacity, translate;
+    transition-property:
+      background-color,
+      border-color,
+      color,
+      opacity,
+      box-shadow,
+      translate;
     transition-timing-function: ease-out;
   }
 
   .motion-button::after {
-    background: currentColor;
+    background: var(--surface);
     content: "";
     inset-block: 0;
     left: -24%;
@@ -359,7 +528,8 @@
   }
 
   .motion-card:hover {
-    translate: -2px -2px;
+    box-shadow: var(--shadow-active);
+    translate: 0 -2px;
   }
 
   .motion-avatar:hover,
@@ -375,7 +545,7 @@
   .motion-input:focus,
   .motion-input:focus-visible,
   .motion-input:focus-within {
-    background-color: color-mix(in srgb, var(--paper) 88%, var(--signal) 12%);
+    background-color: color-mix(in srgb, var(--surface) 84%, var(--primary-soft) 16%);
     translate: 0 -1px;
   }
 
@@ -384,7 +554,7 @@
   }
 }
 
-/* Le papier ne bouge pas beaucoup. */
+/* Le parcours doit rester calme, même quand le système réduit les mouvements. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

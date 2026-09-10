@@ -11,7 +11,7 @@ function Submit({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="motion-button h-9 shrink-0 bg-offset px-4 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button primary-action shrink-0"
     >
       {pending ? "Envoi…" : label}
     </button>
@@ -33,12 +33,16 @@ export function InviteForm() {
   }, [state]);
 
   return (
-    <form ref={formRef} action={action} className="motion-rise mt-6">
+    <form
+      ref={formRef}
+      action={action}
+      className="motion-rise mt-6 rounded-lg border border-line bg-surface p-5"
+    >
       <div className="motion-stagger flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="flex-1">
           <label
             htmlFor="invite-email"
-            className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+            className="field-label"
           >
             Adresse email
           </label>
@@ -48,14 +52,14 @@ export function InviteForm() {
             type="email"
             required
             placeholder="collegue@exemple.fr"
-            className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink placeholder:text-ink-30 focus:border-ink focus:outline-none"
+            className="motion-input field-control mt-2"
           />
         </div>
 
         <div>
           <label
             htmlFor="invite-role"
-            className="block font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70"
+            className="field-label"
           >
             Rôle
           </label>
@@ -63,7 +67,7 @@ export function InviteForm() {
             id="invite-role"
             name="role"
             defaultValue="member"
-            className="motion-input mt-2 h-9 w-full border border-ink-30 bg-paper px-3 text-sm text-ink focus:border-ink focus:outline-none sm:w-[160px]"
+            className="motion-input field-control mt-2 sm:w-[170px]"
           >
             <option value="member">Membre</option>
             <option value="admin">Administrateur</option>
@@ -97,7 +101,7 @@ export function RemoveMemberForm({
       <button
         type="submit"
         aria-label={`Retirer ${email} de l'organisation`}
-        className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text"
+        className="motion-link text-action"
       >
         Retirer
       </button>

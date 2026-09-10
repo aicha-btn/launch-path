@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { formatDateTime, formatShort, lateDays } from "@/lib/dates";
+import { formatDateTime, lateDays } from "@/lib/dates";
+import { DueBadge, OwnerBadge } from "@/components/path-rail";
 import { Stamp, StatusLabel } from "@/components/marks";
-import { Avatar } from "@/components/ui";
 import { CommentForm, TaskEditForm } from "@/components/journeys/task-form";
 import { deleteComment } from "@/server/actions/comments";
 import type { TaskDetail } from "@/server/db/queries/tasks";
@@ -34,22 +34,20 @@ export function TaskSheet({
 
   return (
     <>
-      {/* Voile : encre à 88 %, sans flou — l'élévation ne se dit jamais par
-          un dégradé dans ce système. */}
       <Link
         href={closeHref}
         aria-label="Fermer le panneau"
-        className="motion-fade fixed inset-0 z-40 bg-ink/[0.88] no-underline"
+        className="motion-fade fixed inset-0 z-40 bg-text/55 no-underline"
       />
 
       <aside
         aria-label={`Détail de l'étape ${task.position}`}
-        className="motion-sheet fixed inset-y-0 right-0 z-50 flex w-full max-w-[480px] flex-col border-l-[3px] border-ink bg-paper"
+        className="motion-sheet fixed inset-y-0 right-0 z-50 flex w-full max-w-[500px] flex-col border-l border-line bg-surface-raised"
       >
         {/* En-tête */}
-        <div className="border-b-[3px] border-ink px-6 py-5">
+        <div className="border-b border-line px-6 py-5">
           <div className="flex items-start justify-between gap-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
               Étape {String(task.position).padStart(2, "0")} sur{" "}
               {String(detail.totalSteps).padStart(2, "0")} ·{" "}
               {detail.journeySubject}
@@ -57,13 +55,13 @@ export function TaskSheet({
             <Link
               href={closeHref}
               aria-label="Fermer"
-              className="motion-button inline-flex h-7 w-7 items-center justify-center font-mono text-[13px] leading-none text-ink no-underline hover:text-correction-text"
+              className="motion-button inline-flex h-8 w-8 items-center justify-center rounded-full text-[13px] leading-none text-text-muted no-underline hover:bg-overdue-soft hover:text-overdue"
             >
               ✕
             </Link>
           </div>
 
-          <h2 className="mt-3 font-serif text-[28px] leading-[1.08] tracking-[-0.01em] text-ink">
+          <h2 className="mt-3 text-[28px] font-semibold leading-[1.08] tracking-[-0.01em] text-text">
             {task.title}
           </h2>
 
@@ -79,15 +77,11 @@ export function TaskSheet({
             {late > 0 && task.status === "todo" ? (
               <Stamp>{`Retard ${late} j`}</Stamp>
             ) : (
-              <span className="font-mono text-[12px] tabular-nums text-ink-70">
-                {formatShort(task.dueDate)}
-              </span>
+              <DueBadge task={task} />
             )}
 
             {task.assignee && (
-              <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70">
-                <Avatar member={task.assignee} /> {task.assignee.name}
-              </span>
+              <OwnerBadge member={task.assignee} />
             )}
           </div>
         </div>
@@ -95,13 +89,13 @@ export function TaskSheet({
         {/* Corps défilant */}
         <div className="motion-stagger flex-1 overflow-y-auto px-6 py-6">
           {task.description && (
-            <p className="mb-8 text-[13px] leading-relaxed text-ink-70">
+            <p className="mb-8 text-[13px] leading-relaxed text-text-muted">
               {task.description}
             </p>
           )}
 
           <section>
-            <h3 className="border-b-[3px] border-ink pb-2 font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
+            <h3 className="border-b border-line pb-3 text-[14px] font-semibold text-text">
               Affectation
             </h3>
             <div className="mt-5">
@@ -110,37 +104,39 @@ export function TaskSheet({
           </section>
 
           <section className="mt-12">
-            <div className="flex items-baseline justify-between border-b-[3px] border-ink pb-2">
-              <h3 className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink">
+            <div className="flex items-baseline justify-between border-b border-line pb-3">
+              <h3 className="text-[14px] font-semibold text-text">
                 Commentaires
               </h3>
-              <span className="font-mono text-[11px] tabular-nums text-ink-70">
+              <span className="font-mono text-[11px] tabular-nums text-text-muted">
                 {String(comments.length).padStart(2, "0")}
               </span>
             </div>
 
             {comments.length === 0 ? (
-              <p className="py-5 text-[13px] text-ink-70">
+              <p className="py-5 text-[13px] text-text-muted">
                 Aucun commentaire. Notez ici ce qui bloque : c&apos;est ce
                 qu&apos;on relit pour améliorer le parcours type.
               </p>
             ) : (
               <ul className="mt-2">
                 {comments.map((comment) => (
-                  <li key={comment.id} className="motion-row border-b border-ink-15 py-4">
+                  <li key={comment.id} className="motion-row border-b border-line py-4">
                     <div className="flex items-center justify-between gap-3">
                       <span className="flex min-w-0 items-center gap-2">
-                        {comment.author && <Avatar member={comment.author} />}
-                        <span className="truncate font-mono text-[10px] uppercase tracking-[0.08em] text-ink-70">
+                        {comment.author && (
+                          <OwnerBadge member={comment.author} showName={false} />
+                        )}
+                        <span className="truncate text-action text-text-muted">
                           {comment.author?.name ?? "(auteur inconnu)"}
                         </span>
                       </span>
-                      <span className="shrink-0 font-mono text-[10px] tabular-nums text-ink-45">
+                      <span className="shrink-0 font-mono text-[10px] tabular-nums text-text-soft">
                         {formatDateTime(comment.createdAt)}
                       </span>
                     </div>
 
-                    <p className="mt-2 whitespace-pre-wrap text-[13px] leading-relaxed text-ink">
+                    <p className="mt-2 whitespace-pre-wrap text-[13px] leading-relaxed text-text">
                       {comment.body}
                     </p>
 
@@ -154,7 +150,7 @@ export function TaskSheet({
                         />
                         <button
                           type="submit"
-                          className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text"
+                          className="motion-link text-action"
                         >
                           Supprimer
                         </button>

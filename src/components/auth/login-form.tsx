@@ -11,7 +11,7 @@ function SubmitButton({ children }: { children: React.ReactNode }) {
     <button
       type="submit"
       disabled={pending}
-      className="motion-button h-9 w-full bg-offset font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-paper transition-colors duration-[120ms] hover:bg-ink disabled:bg-ink-30"
+      className="motion-button primary-action w-full"
     >
       {pending ? "Envoi…" : children}
     </button>
@@ -25,7 +25,7 @@ function DemoButton() {
     <button
       type="submit"
       disabled={pending}
-      className="motion-button h-9 w-full border border-ink font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-ink transition-colors duration-[120ms] hover:bg-signal disabled:text-ink-30"
+      className="motion-button secondary-action w-full"
     >
       {pending ? "Connexion…" : "Entrer avec le compte de démonstration"}
     </button>
@@ -42,12 +42,11 @@ export function LoginForm({ next }: { next: string }) {
 
         <label
           htmlFor="email"
-          className="block font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70"
+          className="field-label"
         >
           Adresse email
         </label>
 
-        {/* Exception unique du système : champ souligné, sans cadre. */}
         <input
           id="email"
           name="email"
@@ -57,7 +56,7 @@ export function LoginForm({ next }: { next: string }) {
           placeholder="manon@exemple.fr"
           aria-invalid={state?.ok === false}
           aria-describedby={state ? "login-message" : undefined}
-          className="motion-input mt-2 h-9 w-full border-b border-ink bg-transparent text-sm text-ink placeholder:text-ink-30 focus:outline-none focus-visible:border-b-2"
+          className="motion-input field-control mt-2"
         />
 
         <div className="mt-8">
@@ -68,8 +67,10 @@ export function LoginForm({ next }: { next: string }) {
           <p
             id="login-message"
             role="status"
-            className={`motion-rise mt-4 font-mono text-[11px] uppercase leading-relaxed tracking-[0.08em] ${
-              state.ok ? "text-ink-70" : "text-correction-text"
+            className={`motion-rise mt-4 rounded-md px-3 py-2 text-[12px] font-semibold leading-relaxed ${
+              state.ok
+                ? "bg-success-soft text-success"
+                : "bg-overdue-soft text-overdue"
             }`}
           >
             {state.ok ? state.message : state.error}
@@ -79,14 +80,14 @@ export function LoginForm({ next }: { next: string }) {
 
       {/* Accès démonstration : sans ce raccourci, un visiteur venu de la
           page publique buterait sur un formulaire et repartirait. */}
-      <div className="motion-rise-delay mt-10 border-t border-ink pt-6">
-        <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
+      <div className="motion-rise-delay mt-10 border-t border-line pt-6">
+        <p className="text-action">
           Ou sans inscription
         </p>
         <form action={signInAsDemo} className="mt-3">
           <DemoButton />
         </form>
-        <p className="mt-3 text-[12px] leading-relaxed text-ink-70">
+        <p className="mt-3 text-[12px] leading-relaxed text-text-muted">
           Compte de lecture avec des données réalistes : quatre onboardings en
           cours, dont un en retard.
         </p>

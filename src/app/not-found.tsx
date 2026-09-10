@@ -1,27 +1,27 @@
 import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui";
 
-/** 404 hors du groupe applicatif : pas de sidebar, papier plein. */
+/** 404 hors du groupe applicatif : pas de sidebar, trajectoire interrompue. */
 export default function NotFound() {
   return (
-    <main className="motion-page min-h-dvh bg-paper px-6 py-16 sm:px-16 lg:px-24">
+    <main className="motion-page min-h-dvh bg-canvas px-6 py-16 sm:px-16 lg:px-24">
       <div className="flex min-h-[calc(100dvh-8rem)] items-center">
         <div className="motion-stagger w-full max-w-[480px]">
           <div className="rule-double pt-6">
             <Logo />
           </div>
 
-          <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70">
+          <p className="mt-10 text-[12px] font-semibold uppercase tracking-[0.08em] text-primary-text">
             Erreur 404
           </p>
 
-          <h1 className="mt-3 font-serif text-[44px] leading-[1.02] tracking-[-0.02em] text-ink">
+          <h1 className="mt-3 text-[42px] font-semibold leading-[1.04] tracking-[-0.01em] text-text">
             Cette page
             <br />
             n&apos;existe pas.
           </h1>
 
-          <div className="mt-8 border-t border-ink pt-5 text-[13px] leading-relaxed text-ink-70">
+          <div className="mt-8 border-t border-line pt-5 text-[13px] leading-relaxed text-text-muted">
             Le lien est peut-être incomplet, ou la page a été déplacée.
           </div>
 

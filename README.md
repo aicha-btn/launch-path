@@ -266,20 +266,20 @@ Détail complet dans [`docs/journal.md`](docs/journal.md).
 
 ## Design system
 
-Direction assumée : **brutalisme éditorial**. Le produit ressemble à un
-document imprimé plutôt qu'à un dashboard.
+Direction assumée : **Journey Orchestration System**. Le produit ressemble à un
+cockpit calme qui rend lisibles les parcours, checkpoints, owners, échéances et
+prochaines actions.
 
-- **Quatre encres, un rôle exclusif chacune** — noir (texte et filets), bleu
-  offset (identité, structure, action), jaune signal (emphase, en aplat
-  uniquement), rouge de correction (**ce qui requiert une attention** : le
-  retard, une erreur de saisie, une action destructive — et rien d'autre)
-- **Aucun angle arrondi, aucune ombre** — l'élévation s'exprime par
-  l'épaisseur du filet
-- **Les états sont des marques typographiques** — une tâche faite est barrée,
-  une échéance proche est soulignée, un retard est tamponné
-- **Trois familles typographiques, rôles exclusifs** — Instrument Serif
-  (affichage, jamais sous 28 px), Archivo (interface), IBM Plex Mono (dates,
-  compteurs, libellés)
+- **Rail de parcours comme signature** — `PathRail` et `JourneyPathPreview`
+  montrent la progression réelle plutôt qu'une checklist abstraite
+- **Couleur fonctionnelle** — indigo pour l'action et la position actuelle,
+  vert pour le terminé, corail pour le retard, ambre pour l'attention proche
+- **Surfaces douces, badges compacts** — cartes, formulaires et panneaux ont
+  des rayons modérés et des états lisibles sur mobile
+- **Animations sobres** — entrées progressives, micro-hovers, feedback des
+  boutons, avec respect de `prefers-reduced-motion`
+- **Typographie produit** — Archivo pour l'interface, IBM Plex Mono pour les
+  métadonnées, Instrument Serif seulement en accent exceptionnel
 
 Spécification complète : [`docs/design-system.md`](docs/design-system.md).
 

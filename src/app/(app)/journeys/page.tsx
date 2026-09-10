@@ -1,10 +1,7 @@
-import Link from "next/link";
 import { Masthead } from "@/components/masthead";
-import { FolioCompact } from "@/components/folio";
-import { JourneyStatusLabel, Stamp } from "@/components/marks";
 import { JourneyFilters } from "@/components/journeys/journey-filters";
-import { Avatar, Button, EmptyState } from "@/components/ui";
-import { formatShort, lateDays } from "@/lib/dates";
+import { JourneyCard } from "@/components/journeys/journey-card";
+import { Button, EmptyState } from "@/components/ui";
 import { requireMembership } from "@/server/auth/session";
 import {
   countActiveJourneys,
@@ -115,78 +112,11 @@ export default async function JourneysPage({
             </EmptyState>
           )
         ) : (
-          <>
-            {/* En-tête de tableau : mono capitales sur filet lourd. */}
-            <div className="motion-rule hidden grid-cols-[1fr_160px_150px_130px] gap-6 border-b-[3px] border-ink pb-2 lg:grid">
-              {["Personne", "Progression", "Pilote", "Prochaine échéance"].map(
-                (col) => (
-                  <span
-                    key={col}
-                    className="font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-ink-70 last:text-right"
-                  >
-                    {col}
-                  </span>
-                ),
-              )}
-            </div>
-
-            <ul className="motion-stagger">
-              {journeys.map((journey) => {
-                const late = journey.tasks.filter(
-                  (t) => t.status === "todo" && lateDays(t.dueDate) > 0,
-                ).length;
-                const next = journey.tasks.find((t) => t.status === "todo");
-
-                return (
-                  <li
-                    key={journey.id}
-                    className="motion-row border-b border-ink-15 transition-colors duration-[120ms] hover:bg-ink-08"
-                  >
-                    <Link
-                      href={`/journeys/${journey.id}`}
-                      className="grid gap-3 py-4 no-underline lg:grid-cols-[1fr_160px_150px_130px] lg:items-center lg:gap-6"
-                    >
-                      <div className="min-w-0">
-                        <p
-                          className={`truncate text-[15px] font-semibold ${
-                            journey.status === "active"
-                              ? "text-ink"
-                              : "text-ink-45 line-through"
-                          }`}
-                        >
-                          {journey.subjectName}
-                        </p>
-                        <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.08em] text-ink-70">
-                          {journey.templateName}
-                        </p>
-                      </div>
-
-                      <FolioCompact tasks={journey.tasks} />
-
-                      <div className="flex min-w-0 items-center gap-2">
-                        <Avatar member={journey.owner} />
-                        <span className="truncate text-[12px] text-ink-70">
-                          {journey.owner.name}
-                        </span>
-                      </div>
-
-                      <div className="lg:text-right">
-                        {late > 0 ? (
-                          <Stamp>{`Retard ${late} tâche${late > 1 ? "s" : ""}`}</Stamp>
-                        ) : next ? (
-                          <span className="font-mono text-[12px] tabular-nums text-ink-70">
-                            {formatShort(next.dueDate)}
-                          </span>
-                        ) : (
-                          <JourneyStatusLabel status={journey.status} />
-                        )}
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </>
+          <div className="motion-stagger grid gap-4 lg:grid-cols-2">
+            {journeys.map((journey) => (
+              <JourneyCard key={journey.id} journey={journey} />
+            ))}
+          </div>
         )}
       </div>
     </>

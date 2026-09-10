@@ -223,22 +223,21 @@ Détail complet dans `docs/plan_action_launchpath.md` et le README.
 
 ---
 
-## 7. Le design system — quatre encres
+## 7. Le design system — Journey Orchestration
 
-Référence : `docs/design-system.md`. Direction : **brutalisme éditorial**.
+Référence : `docs/design-system.md`. Direction actuelle :
+**Journey Orchestration System**.
 
-- **Noir** : texte et filets. **Bleu offset `#2242D8`** : identité, structure,
-  action. **Jaune signal `#FFDD00`** : emphase, aplat uniquement, jamais du
-  texte. **Rouge `#D8231A`** : ce qui requiert une attention — trois usages
-  seulement (retard, erreur de saisie, action destructive au survol).
-- **Aucun angle arrondi, aucune ombre.** Garde-fou `!important` dans
-  `globals.css`, à remplacer proprement à la mise en ligne.
-- Trois polices, rôles exclusifs : Instrument Serif (affichage, jamais sous
-  28 px), Archivo (interface), IBM Plex Mono (dates, compteurs, libellés).
-- Les états sont des **marques typographiques** : barré, souligné, estompé,
-  tamponné. Pas des couleurs.
-- Composants signature : `Masthead`, `Folio` (progression en carrés
-  numérotés), `Stamp`, `TaskRow`.
+- Le rail de parcours devient la signature du produit : `PathRail`,
+  `JourneyPathPreview`, checkpoints et prochaine action.
+- La palette est fonctionnelle : indigo pour l'action et la position actuelle,
+  vert pour le terminé, corail pour le retard, ambre pour l'attention proche.
+- Les formes sont arrondies avec retenue : badges, avatars, formulaires et
+  cartes doivent être compacts et lisibles sur mobile.
+- Les animations restent sobres : entrée, hover, feedback de bouton, et respect
+  de `prefers-reduced-motion`.
+- Composants signature : `Masthead`, `PathRail`, `JourneyCard`, `DueBadge`,
+  `OwnerBadge`, `TaskRow`.
 
 ---
 

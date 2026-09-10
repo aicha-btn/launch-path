@@ -38,7 +38,7 @@ export default async function MembersPage() {
           <section className="motion-rise max-w-[640px]">
             <SectionRule>Inviter un collègue</SectionRule>
             <InviteForm />
-            <p className="mt-4 text-[12px] leading-relaxed text-ink-70">
+            <p className="mt-4 text-[12px] leading-relaxed text-text-muted">
               La personne reçoit un lien valable sept jours. En développement,
               l&apos;email arrive dans la boîte locale sur le port 54324.
             </p>
@@ -54,22 +54,22 @@ export default async function MembersPage() {
               return (
                 <li
                   key={member.userId}
-                  className="motion-row flex flex-wrap items-center justify-between gap-4 border-b border-ink-15 py-4"
+                  className="motion-row flex flex-wrap items-center justify-between gap-4 rounded-md py-4 hover:bg-primary-soft/30"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="motion-avatar grid h-8 w-8 shrink-0 place-items-center bg-ink font-mono text-[11px] text-paper">
+                    <span className="motion-avatar grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary-soft font-mono text-[11px] font-semibold text-primary-text">
                       {initialsFrom(member.email)}
                     </span>
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-ink">
+                      <p className="truncate text-sm font-semibold text-text">
                         {member.email}
                         {isSelf && (
-                          <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
+                          <span className="text-action ml-2">
                             vous
                           </span>
                         )}
                       </p>
-                      <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
+                      <p className="text-action mt-0.5">
                         Depuis le {formatShort(toBusinessDate(member.joinedAt))}
                       </p>
                     </div>
@@ -102,13 +102,13 @@ export default async function MembersPage() {
               {invitations.map((invitation) => (
                 <li
                   key={invitation.id}
-                  className="motion-row flex flex-wrap items-center justify-between gap-4 border-b border-ink-15 py-4"
+                  className="motion-row flex flex-wrap items-center justify-between gap-4 rounded-md py-4 hover:bg-primary-soft/30"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold text-ink-70">
+                    <p className="truncate text-sm font-semibold text-text-muted">
                       {invitation.email}
                     </p>
-                    <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45">
+                    <p className="text-action mt-0.5">
                       Expire le{" "}
                       {formatShort(toBusinessDate(invitation.expiresAt))}
                       {invitation.invitedByEmail &&
@@ -127,7 +127,7 @@ export default async function MembersPage() {
                         <button
                           type="submit"
                           aria-label={`Annuler l'invitation de ${invitation.email}`}
-                          className="motion-link font-mono text-[10px] uppercase tracking-[0.08em] text-ink-45 underline transition-colors duration-[120ms] hover:text-correction-text"
+                          className="motion-link text-action"
                         >
                           Annuler
                         </button>
@@ -141,7 +141,7 @@ export default async function MembersPage() {
         )}
 
         {!isAdmin && (
-          <p className="motion-rise mt-10 max-w-[60ch] text-[13px] leading-relaxed text-ink-70">
+          <p className="motion-rise mt-10 max-w-[60ch] text-[13px] leading-relaxed text-text-muted">
             Seuls les administrateurs peuvent inviter ou retirer des membres.
           </p>
         )}
