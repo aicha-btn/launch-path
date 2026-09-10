@@ -300,6 +300,23 @@
     justify-items: center;
     width: 28px;
   }
+
+  .snap-strip {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .snap-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-summary::marker {
+    content: "";
+  }
 }
 
 .rule-double {
